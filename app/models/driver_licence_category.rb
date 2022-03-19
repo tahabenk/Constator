@@ -1,0 +1,2 @@
+class DriverLicenceCategory < ApplicationRecord
+end
