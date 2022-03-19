@@ -1,0 +1,2 @@
+class ReportSatu < ApplicationRecord
+end
