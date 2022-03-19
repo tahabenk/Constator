@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_102354) do
+ActiveRecord::Schema.define(version: 2022_03_19_130955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,37 @@ ActiveRecord::Schema.define(version: 2022_03_19_102354) do
     t.index ["licence_category_id"], name: "index_category_associations_on_licence_category_id"
   end
 
+  create_table "declarations", force: :cascade do |t|
+    t.boolean "flag_police_report"
+    t.boolean "flag_police_statement"
+    t.string "police_station"
+    t.boolean "flag_usual_driver"
+    t.boolean "flag_usual_resident"
+    t.boolean "flag_single"
+    t.boolean "flag_employee"
+    t.string "driving_reason"
+    t.string "usual_parking_place"
+    t.string "expertise_garage"
+    t.string "expertise_date"
+    t.string "expertise_phone_contact"
+    t.integer "trailing_vehicule_registration_number"
+    t.string "other_damages_description"
+    t.string "other_damages_thirdparty_name"
+    t.string "other_damages_thirdparty_address"
+    t.date "declaration_datetime"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "driver_associations", force: :cascade do |t|
+    t.bigint "driver_id", null: false
+    t.bigint "report_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["driver_id"], name: "index_driver_associations_on_driver_id"
+    t.index ["report_id"], name: "index_driver_associations_on_report_id"
+  end
+
   create_table "drivers", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "driver_licence_number"
@@ -34,9 +65,42 @@ ActiveRecord::Schema.define(version: 2022_03_19_102354) do
     t.index ["user_id"], name: "index_drivers_on_user_id"
   end
 
+  create_table "insurance_policies", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "licence_categories", force: :cascade do |t|
     t.string "type"
     t.string "type_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "report_declarations", force: :cascade do |t|
+    t.bigint "report_id", null: false
+    t.bigint "declaration_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["declaration_id"], name: "index_report_declarations_on_declaration_id"
+    t.index ["report_id"], name: "index_report_declarations_on_report_id"
+  end
+
+  create_table "report_statuses", force: :cascade do |t|
+    t.string "status_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.datetime "accident_datetime"
+    t.string "address"
+    t.float "latitude"
+    t.float "longtitude"
+    t.boolean "flag_injury"
+    t.boolean "flag_other_damage"
+    t.string "visible_damages"
+    t.string "observations"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -60,7 +124,35 @@ ActiveRecord::Schema.define(version: 2022_03_19_102354) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vehicle_associations", force: :cascade do |t|
+    t.bigint "vehicle_id", null: false
+    t.bigint "report_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["report_id"], name: "index_vehicle_associations_on_report_id"
+    t.index ["vehicle_id"], name: "index_vehicle_associations_on_vehicle_id"
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "brand"
+    t.string "model"
+    t.string "registration_number"
+    t.string "chassis_number"
+    t.bigint "insurance_policy_id", null: false
+    t.integer "gross_weight"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["insurance_policy_id"], name: "index_vehicles_on_insurance_policy_id"
+  end
+
   add_foreign_key "category_associations", "drivers"
   add_foreign_key "category_associations", "licence_categories"
+  add_foreign_key "driver_associations", "drivers"
+  add_foreign_key "driver_associations", "reports"
   add_foreign_key "drivers", "users"
+  add_foreign_key "report_declarations", "declarations"
+  add_foreign_key "report_declarations", "reports"
+  add_foreign_key "vehicle_associations", "reports"
+  add_foreign_key "vehicle_associations", "vehicles"
+  add_foreign_key "vehicles", "insurance_policies"
 end
