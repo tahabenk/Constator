@@ -1,7 +1,6 @@
 class CreateDeclarations < ActiveRecord::Migration[6.1]
   def change
     create_table :declarations do |t|
-      t.references :insurance_policy, null: false, foreign_key: true
       t.boolean :flag_police_report
       t.boolean :flag_police_statement
       t.string :police_station
