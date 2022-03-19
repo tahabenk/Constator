@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_130955) do
+ActiveRecord::Schema.define(version: 2022_03_19_160013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,18 +42,20 @@ ActiveRecord::Schema.define(version: 2022_03_19_130955) do
     t.string "other_damages_description"
     t.string "other_damages_thirdparty_name"
     t.string "other_damages_thirdparty_address"
-    t.date "declaration_datetime"
+    t.datetime "declaration_datetime"
+    t.bigint "insurance_policy_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["insurance_policy_id"], name: "index_declarations_on_insurance_policy_id"
   end
 
-  create_table "driver_associations", force: :cascade do |t|
-    t.bigint "driver_id", null: false
+  create_table "driver_reports", force: :cascade do |t|
     t.bigint "report_id", null: false
+    t.bigint "driver_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["driver_id"], name: "index_driver_associations_on_driver_id"
-    t.index ["report_id"], name: "index_driver_associations_on_report_id"
+    t.index ["driver_id"], name: "index_driver_reports_on_driver_id"
+    t.index ["report_id"], name: "index_driver_reports_on_report_id"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -65,7 +67,27 @@ ActiveRecord::Schema.define(version: 2022_03_19_130955) do
     t.index ["user_id"], name: "index_drivers_on_user_id"
   end
 
+  create_table "insurance_certificates", force: :cascade do |t|
+    t.bigint "insurance_policy_id"
+    t.string "insurance_certification_number"
+    t.string "international_certification_number"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["insurance_policy_id"], name: "index_insurance_certificates_on_insurance_policy_id"
+  end
+
   create_table "insurance_policies", force: :cascade do |t|
+    t.string "insured_name"
+    t.string "insured_last_name"
+    t.string "address"
+    t.string "insurance_company_name"
+    t.string "policy_number"
+    t.string "insurance_certification_number"
+    t.string "international_certification_number"
+    t.datetime "start_date"
+    t.datetime "end_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -101,8 +123,10 @@ ActiveRecord::Schema.define(version: 2022_03_19_130955) do
     t.boolean "flag_other_damage"
     t.string "visible_damages"
     t.string "observations"
+    t.bigint "report_status_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["report_status_id"], name: "index_reports_on_report_status_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -147,11 +171,13 @@ ActiveRecord::Schema.define(version: 2022_03_19_130955) do
 
   add_foreign_key "category_associations", "drivers"
   add_foreign_key "category_associations", "licence_categories"
-  add_foreign_key "driver_associations", "drivers"
-  add_foreign_key "driver_associations", "reports"
+  add_foreign_key "declarations", "insurance_policies"
+  add_foreign_key "driver_reports", "drivers"
+  add_foreign_key "driver_reports", "reports"
   add_foreign_key "drivers", "users"
   add_foreign_key "report_declarations", "declarations"
   add_foreign_key "report_declarations", "reports"
+  add_foreign_key "reports", "report_statuses"
   add_foreign_key "vehicle_associations", "reports"
   add_foreign_key "vehicle_associations", "vehicles"
   add_foreign_key "vehicles", "insurance_policies"
