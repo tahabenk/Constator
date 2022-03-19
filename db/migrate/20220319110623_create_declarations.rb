@@ -17,7 +17,7 @@ class CreateDeclarations < ActiveRecord::Migration[6.1]
       t.string :other_damages_description
       t.string :other_damages_thirdparty_name
       t.string :other_damages_thirdparty_address
-      t.timestamps :declaration_datetime
+      t.date :declaration_datetime
 
       t.timestamps
     end
