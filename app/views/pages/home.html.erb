@@ -1,2 +1,19 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+  <div class="row">
+    <div class="container-light-green">
+      <%# <div class="home-content">
+        <h1>Le constat pour tout le monde, partout dans le monde</h1>
+      <div> %>
+      <div class="jumbotron" style="margin-top: 30%; color: #006A71; max-width: 100%">
+        <h1 class="display-2" style="font-family: 'Orbitron', 'sans-serif';"><i class="fas fa-robot"></i> Constator</h1>
+
+        <p class="lead">Your report & declaration not <cite>harder</cite> but <cite>faster, better, stronger</cite></p>
+        <hr class="my-4">
+        <p><q>Wise men are never in a hurry</q></p>
+        <p class="lead">
+          <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Join the community</a> -->
+          <%= link_to 'Join the community',  new_user_registration_path, class: 'btn btn-primary btn-lg' %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

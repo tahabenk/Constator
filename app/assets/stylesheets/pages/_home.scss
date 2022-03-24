@@ -1,1 +1,18 @@
 // Specific CSS for your home-page
+.container-light-green {
+  background-image: url('https://res.cloudinary.com/daol2k792/image/upload/v1648004967/BathRoom4All/Constator/background-circles-2_fnvxlt.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  border: 0px;
+}
+
+.home-content {
+  margin-top: 25%;
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large;
+  color: $constator-dark-green;
+}
