@@ -1,0 +1,20 @@
+
+.btn-register {
+position: absolute;
+width: 354px;
+height: 58px;
+left: 37px;
+top: 698px;
+background: #FF7E67;
+border-radius: 15px;
+color: white;
+padding: 8px 24px;
+font-family: Quicksand;
+font-weight: bold;
+transition: background 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: #fc836d;
+  color: white;
+}
