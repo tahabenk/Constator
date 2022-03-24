@@ -1,0 +1,86 @@
+.sign-up-botton {
+position: absolute;
+width: 429px;
+height: 63px;
+left: 0px;
+top: 862px;
+
+background: #FF7E67;
+}
+
+.sign-up-fields {
+position: absolute;
+width: 354px;
+height: 0px;
+left: 36px;
+top: 360px;
+}
+.sign-in {
+position: absolute;
+width: 429px;
+height: 63px;
+left: 0px;
+top: 862px;
+background: #FF7E67;
+}
+
+.sign-in-button {
+position: absolute;
+width: 134px;
+height: 23px;
+left: 270px;
+top: 882px;
+
+font-family: 'Quicksand';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+color: #07635D;
+}
+
+.main {
+  background-color: #006A71;
+  height: 100vh;
+}
+
+.transparent-input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color:white;
+  background: transparent;
+  font-family: 'Quicksand', sans-serif;
+  padding-bottom: 18px;
+  padding-top: 18px;
+}
+
+.transparent-input:focus {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color:white;
+  background: transparent;
+}
+
+.transparent-input::placeholder {
+  color: #E5E5E5;
+}
+
+.create-account {
+position: absolute;
+width: 260px;
+height: 100px;
+left: 37px;
+top: 95px;
+
+font-family: 'Quicksand', sans-serif;
+font-style: normal;
+font-weight: 700;
+font-size: 40px;
+line-height: 50px;
+
+color: #FFFFFF;
+
+}
