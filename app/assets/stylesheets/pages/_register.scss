@@ -1,10 +1,6 @@
 .sign-up-botton {
-position: absolute;
 width: 429px;
-height: 63px;
-left: 0px;
-top: 862px;
-
+height: 50px;
 background: #FF7E67;
 }
 
@@ -15,34 +11,35 @@ height: 0px;
 left: 36px;
 top: 360px;
 }
+
 .sign-in {
-position: absolute;
-width: 429px;
-height: 63px;
-left: 0px;
-top: 862px;
+height: 50px;
 background: #FF7E67;
 }
 
 .sign-in-button {
-position: absolute;
-width: 134px;
-height: 23px;
-left: 270px;
-top: 882px;
+font-size: 18px;
+margin-top: 10px;
+  a {
+  font-family: 'Quicksand', sans-serif !important;
+  text-decoration: none;
+  font-weight: bold;
+  }
+}
 
+.sign-in-text {
+margin-top: 10px;
 font-family: 'Quicksand';
 font-style: normal;
-font-weight: 700;
 font-size: 18px;
-line-height: 22px;
-/* identical to box height */
-color: #07635D;
+color: #FFFFFF;
 }
 
 .main {
+  background-size: contain;
+  padding: 20px;
+  height: 100%;
   background-color: #006A71;
-  height: 100vh;
 }
 
 .transparent-input {
@@ -69,12 +66,6 @@ color: #07635D;
 }
 
 .create-account {
-position: absolute;
-width: 260px;
-height: 100px;
-left: 37px;
-top: 95px;
-
 font-family: 'Quicksand', sans-serif;
 font-style: normal;
 font-weight: 700;
@@ -83,4 +74,10 @@ line-height: 50px;
 
 color: #FFFFFF;
 
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
