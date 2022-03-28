@@ -1,0 +1,45 @@
+.login-main {
+  background:{
+    image: asset_url("sign-up_background.png")
+  }
+  background-size: cover;
+  padding: 20px;
+  height: 100%;}
+
+.login-fields {
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.login-input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color:rgba(105, 103, 103, 1);
+  background: transparent;
+  font-family: 'Quicksand', sans-serif;
+  padding-bottom: 18px;
+  padding-top: 18px;
+  color:rgba(105, 103, 103, 1);
+}
+
+.login{
+font-family: 'Quicksand', sans-serif;
+font-style: normal;
+font-weight: 700;
+font-size: 40px;
+line-height: 50px;
+margin-top: 150px;
+color: #006A71;
+}
+
+#login-container {
+  height: 70vh;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
