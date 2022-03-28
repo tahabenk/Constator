@@ -1,9 +1,9 @@
-  <div class="main">
-    <div class= "row" style="margin-top:100px">
-      <div class="col-8 col-lg-4">
+  <div id="register-container" class="register-main">
+      <div class= "row" style="margin-top:100px">
+      <div class="col-8">
         <h2 class="create-account">Créer un compte</h2>
       </div>
-      <div class="col-12 col-lg-4" style="margin-top:100px">
+      <div class="col-12 register-fields">
         <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %> <%= f.error_notification %>
           <input class="form-control string email required transparent-input" autocomplete="email" placeholder="Email *"
           autofocus="autofocus" type="email" value="" name="user[email]" id="user_email" >
@@ -12,7 +12,7 @@
           <input class="form-control password required transparent-input" autocomplete="new-password" placeholder="Confirmer le mot de passe *"
           required="required" aria-required="true" type="password" name="user[password_confirmation]" id="user_password_confirmation">
       </div>
-      <div class="col-12 col-lg-4" style="margin-top:100px">
+      <div class="col-12">
         <div class="form-actions">
           <div class="text-center">
             <%= f.button :submit, "S'INSCRIRE", class: "btn-register" %>
