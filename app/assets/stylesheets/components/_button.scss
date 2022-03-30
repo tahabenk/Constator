@@ -1,0 +1,27 @@
+
+.btn-register {
+background: #FF7E67;
+border-radius: 15px;
+color: white;
+padding: 8px 24px;
+font-family: Quicksand;
+font-weight: bold;
+height: 40px;
+width: 300px;
+}
+
+.btn-light a {
+  text-decoration: none !important;
+}
+
+.btn-light:hover {
+  background-color: $constator-dark-orange;
+  border-color: $constator-dark-orange;
+
+  transition: all 0.3s ease-in-out;
+
+  a {
+     color: white !important;
+     transition: all 0.3s ease-in-out;
+  }
+}

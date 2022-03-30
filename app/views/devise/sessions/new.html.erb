@@ -8,12 +8,15 @@
     </div>
     <div class="col-12 login-fields">
       <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <input class="form-control string email required login-input" autocomplete="email"
-      placeholder="Email *" autofocus="autofocus" type="email" value="" name="user[email]" id="user_email">
-      <input class="form-control password required login-input" autocomplete="current-password"
-      placeholder="Mot de passe *" type="password" name="user[password]" id="user_password">
-      <div class="col-12 login-input">
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+        <input class="form-control string email required login-input" autocomplete="email"
+        placeholder="Email *" autofocus="autofocus" type="email" value="" name="user[email]" id="user_email">
+        <input class="form-control password required login-input" autocomplete="current-password"
+        placeholder="Mot de passe *" type="password" name="user[password]" id="user_password">
+        <div class="col-12 login-input">
+          <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+          <%= f.button :submit, "Log in", class: "btn btn-success"%>
+        </div>
+      <% end %>
       </div>
     </div>
     <div class="form-actions">
