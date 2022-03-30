@@ -1,6 +1,6 @@
 <div id="register-container" class="login-main">
   <div class= "row">
-    <div class="col-12" style="margin-top:70px">
+    <div class="col-12" style="margin-top:65px">
       <%= image_tag ("Constator-logo.png"), alt: "Constator", width: 250, class: "center" %>
     </div>
     <div class="col-8" style="margin-top:0px">
@@ -16,8 +16,11 @@
         <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
       </div>
     </div>
+    <div class="form-actions">
+      <div class="text-center">
+      <%= f.button :submit, "SE CONNECTER", class: "login-button" %>
+      </div>
   </div>
-</div>
   <div class= "row footer sign-in" style="margin:0px">
     <div class="col-8">
       <div class="devise-shared-links">
@@ -28,3 +31,4 @@
       <% end %> <%= render "devise/shared/links" %>
     </div>
   </div>
+</div>

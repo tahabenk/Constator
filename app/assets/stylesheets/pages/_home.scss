@@ -17,3 +17,54 @@
   font-size: xx-large;
   color: $constator-dark-green;
 }
+
+.constator-home-text{
+font-family: 'Quicksand', sans-serif;
+font-style: normal;
+font-weight: 700;
+font-size: 40px;
+line-height: 50px;
+margin-top: 200px;
+color: #006A71;
+}
+.home-text{
+font-family: 'Orbitron', sans-serif;
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 50px;
+margin-top: 10px;
+color: #99F9F2;
+text-align: center;
+}
+
+.home-main {
+  background:{
+    image: asset_url("Home-page.png")
+  }
+  background-size: cover;
+  padding: 20px;
+  height: 100%;}
+
+#home-container {
+  height: 100vh;
+}
+
+.logo-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+}
+
+.register-btn-home {
+  background: #FF7E67;
+  border-radius: 10px;
+  color: white;
+  padding: 8px 24px;
+  font-family: Quicksand;
+  font-weight: bold;
+  height: 100px;
+  width: 300px;
+  margin-left: 80px;
+}
