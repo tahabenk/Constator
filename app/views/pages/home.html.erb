@@ -1,16 +1,21 @@
 <%= render 'shared/navbar' %>
+<% if user_signed_in? %>
 
-<div class="container">
-  <div class="container-light-green">
-    <div class="jumbotron" style="margin-top: 30%; color: #006A71; max-width: 100%">
-      <h1 class="display-2" style="font-family: 'Orbitron', 'sans-serif';"><i class="fas fa-robot"></i> Constator</h1>
+<% else %>
+  <div class="container">
+    <div class="container-light-green">
+      <div class="jumbotron" style="margin-top: 30%; color: #006A71; max-width: 100%">
+        <h1 class="display-2" style="font-family: 'Orbitron', 'sans-serif';"><i class="fas fa-robot"></i> Constator</h1>
 
-      <p class="lead">Your report & declaration not <cite>harder</cite> but <cite>faster, better, stronger</cite></p>
-      <hr class="my-4">
-      <p><q>Wise men are never in a hurry</q></p>
-      <p class="lead"></p>
-      <%= link_to 'Join the community',  new_user_registration_path, class: 'btn btn-primary btn-lg'%>
-      <%= link_to 'Already having an account, sign-in !',  user_session_path %>
+        <p class="lead">Your report & declaration not <cite>harder</cite> but <cite>faster, better, stronger</cite></p>
+        <hr class="my-4">
+        <p><q>Wise men are never in a hurry</q></p>
+        <p class="lead"></p>
+        <%= link_to 'Join the community',  new_user_registration_path, class: 'btn btn-primary btn-lg'%>
+      <div>
+        <%= link_to 'Already have an account, sign-in !',  user_session_path %>
+      </div>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
