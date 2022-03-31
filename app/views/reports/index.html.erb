@@ -1,11 +1,16 @@
-<div id="register-container">
 <%= render "shared/navbar" %>
-
-<h1>Report page</h1>
-
+<div id="report-container" class="report-main">
 <p id="notice"><%= notice %></p>
-
-<h1>Reports</h1>
+<div class="row report-creation">
+  <div class="col-8">
+    <h1 class="report-creation-text">Mes constats</h1>
+  </div>
+  <div class="col-4 vector-report">
+  <%= link_to new_report_path do %>
+    <%= image_tag ("Vector.png") %>
+   <%end%>
+  </div>
+</div>
 
 <table>
   <thead>
@@ -27,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Report', new_report_path %>
+</div>
