@@ -1,35 +1,31 @@
 <%= render "shared/navbar" %>
-<div id="report-container" class="report-main">
-<p id="notice"><%= notice %></p>
-<div class="row report-creation">
-  <div class="col-8">
-    <h1 class="report-creation-text">Mes constats</h1>
+<div class="report-container">
+  <div class="report-main">
+    <div class="row" style="align-items: center;">
+      <div class="col-8">
+        <h1 class="report-creation-text">Mes constats</h1>
+      </div>
+      <div class="col-4 add-report-button">
+        <a href="<%= new_report_path %>"><i class="fa-solid fa-circle-plus"></i></a>
+      </div>
+    </div>
   </div>
-  <div class="col-4 vector-report">
-  <%= link_to new_report_path do %>
-    <%= image_tag ("Vector.png") %>
-   <%end%>
-  </div>
-</div>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @reports.each do |report| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to 'Show', report %></td>
-        <td><%= link_to 'Edit', edit_report_path(report) %></td>
-        <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
+    <tbody>
+      <% @reports.each do |report| %>
+        <tr>
+          <td><%= link_to 'Show', report %></td>
+          <td><%= link_to 'Edit', edit_report_path(report) %></td>
+          <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
 </div>
