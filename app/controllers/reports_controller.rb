@@ -64,7 +64,16 @@ class ReportsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def report_params
-      params.fetch(:report, {})
-    end
+  def report_params
+    params.permit(:report).require(
+      :accident_datetime,
+      :address,
+      :latitude,
+      :longtitude,
+      :flag_injury,
+      :flag_other_damage,
+      :visible_damages,
+      :observations,
+      :report_status)
+  end
 end

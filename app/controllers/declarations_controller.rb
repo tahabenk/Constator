@@ -65,6 +65,25 @@ class DeclarationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def declaration_params
-      params.fetch(:declaration, {})
+      params.permit(:report).require(
+        :flag_police_report,
+        :flag_police_statement,
+        :police_station,
+        :flag_usual_driver,
+        :flag_usual_resident,
+        :flag_single,
+        :flag_employee,
+        :driving_reason,
+        :usual_parking_place,
+        :expertise_garage,
+        :expertise_date,
+        :expertise_phone_contact,
+        :trailing_vehicule_registration_number,
+        :other_damages_description,
+        :other_damages_thirdparty_name,
+        :other_damages_thirdparty_address,
+        :declaration_datetime,
+        :insurance_policy,
+      )
     end
 end

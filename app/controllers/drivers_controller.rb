@@ -65,6 +65,10 @@ class DriversController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def driver_params
-      params.fetch(:driver, {})
+      params.permit(:report).require(
+        :user,
+        :driver_licence_number,
+        :driver_licence_end_date
+      )
     end
 end

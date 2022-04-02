@@ -1,35 +1,43 @@
+
 <%= render "shared/navbar" %>
 <div id="report-container" class="report-main">
 <p id="notice"><%= notice %></p>
-<div class="row report-creation">
-  <div class="col-8">
-    <h1 class="report-creation-text">Mes constats</h1>
-  </div>
-  <div class="col-4 vector-report">
-  <%= link_to new_report_path do %>
-    <%= image_tag ("Vector.png") %>
-   <%end%>
+  <div class="row report-creation">
+    <div class="col-9">
+      <h1 class="report-creation-text">Mes constats</h1>
+    </div>
+    <div class="col-3 vector-report">
+      <%= link_to new_report_path do %>
+       <%= image_tag ("Vector.png") %>
+     <%end%>
+    </div>
   </div>
 </div>
-
 <table>
   <thead>
     <tr>
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @reports.each do |report| %>
       <tr>
+      <div class="row">
+      <div class="col-7" style="colorblack">
+        <p><%= report.address %></p>
         <td><%= link_to 'Show', report %></td>
+      </div>
+      <div class="col-3">
         <td><%= link_to 'Edit', edit_report_path(report) %></td>
+      </div>
+      <div class="col-2">
         <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </div>
+      </div>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
 </div>
