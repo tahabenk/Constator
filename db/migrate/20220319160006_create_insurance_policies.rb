@@ -6,8 +6,6 @@ class CreateInsurancePolicies < ActiveRecord::Migration[6.1]
       t.string :address
       t.string :insurance_company_name
       t.string :policy_number
-      t.string :insurance_certification_number
-      t.string :international_certification_number
       t.datetime :start_date
       t.datetime :end_time
 
