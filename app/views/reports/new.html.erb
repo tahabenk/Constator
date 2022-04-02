@@ -21,7 +21,7 @@
 
   <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
     <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
-    <%= report.input :accident_datetime, as: :datetime-local %>
+    <%= report.input :accident_datetime %>
     <%= report.button :submit, class: 'btn-info' %>
   <% end %>
 </div>
