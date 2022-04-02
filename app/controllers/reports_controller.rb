@@ -21,10 +21,15 @@ class ReportsController < ApplicationController
 
   # POST /reports or /reports.json
   def create
-    @report = Report.new(report_params)
+    report_parameters = report_params
+    report_parameters[:report_status_id] = 1
+
+    @report = Report.new(report_parameters)
 
     respond_to do |format|
       if @report.save
+        #create driver report
+        DriverReport.create(report: @report, driver_id: current_user.driver.id)
         format.html { redirect_to report_url(@report), notice: "Report was successfully created." }
         format.json { render :show, status: :created, location: @report }
       else
@@ -65,7 +70,7 @@ class ReportsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
   def report_params
-    params.permit(:report).require(
+    params.require(:report).permit(
       :accident_datetime,
       :address,
       :latitude,
@@ -73,7 +78,7 @@ class ReportsController < ApplicationController
       :flag_injury,
       :flag_other_damage,
       :visible_damages,
-      :observations,
-      :report_status)
+      :observations
+    )
   end
 end

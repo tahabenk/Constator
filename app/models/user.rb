@@ -4,4 +4,5 @@ class User < ApplicationRecord
   # bon courage
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_one :driver
 end
