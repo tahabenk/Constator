@@ -32,7 +32,7 @@ User.create!(
   email: 'tator@gmail.com',
   password: '123456'
 )
-
+puts "User 1 created"
 User.create!(
   name: 'constator',
   family_name: 'toitator',
@@ -43,14 +43,14 @@ User.create!(
   email: 'toitator@gmail.com',
   password: '123456'
 )
-
+puts "User 2 created"
 User.all.each do |user|
   Driver.create!(
     user_id: user.id,
     driver_licence_number: Faker::DrivingLicence.british_driving_licence
   )
 end
-
+puts "Driver created"
 insurers_list = ['RMA', 'Wafa Assurance', 'AtlantaSanad', 'Axa Assurance Maroc']
 
 5.times do
@@ -69,6 +69,7 @@ InsurancePolicy.all.each do |policy|
     international_certification_number: Faker::Lorem.characters(number: 20, min_alpha: 4, min_numeric: 2)
   )
 end
+puts "Insurance policies created"
 
 InsuranceCertificate.all.each do |certificate|
   br = Faker::Vehicle.make
@@ -81,3 +82,4 @@ InsuranceCertificate.all.each do |certificate|
     gross_weight: rand(500..800)
   )
 end
+puts "Insurance certificates created"
