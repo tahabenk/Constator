@@ -84,8 +84,6 @@ ActiveRecord::Schema.define(version: 2022_03_19_160013) do
     t.string "address"
     t.string "insurance_company_name"
     t.string "policy_number"
-    t.string "insurance_certification_number"
-    t.string "international_certification_number"
     t.datetime "start_date"
     t.datetime "end_time"
     t.datetime "created_at", precision: 6, null: false
@@ -162,11 +160,11 @@ ActiveRecord::Schema.define(version: 2022_03_19_160013) do
     t.string "model"
     t.string "registration_number"
     t.string "chassis_number"
-    t.bigint "insurance_policy_id", null: false
+    t.bigint "insurance_certificate_id", null: false
     t.integer "gross_weight"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["insurance_policy_id"], name: "index_vehicles_on_insurance_policy_id"
+    t.index ["insurance_certificate_id"], name: "index_vehicles_on_insurance_certificate_id"
   end
 
   add_foreign_key "category_associations", "drivers"
@@ -180,5 +178,5 @@ ActiveRecord::Schema.define(version: 2022_03_19_160013) do
   add_foreign_key "reports", "report_statuses"
   add_foreign_key "vehicle_associations", "reports"
   add_foreign_key "vehicle_associations", "vehicles"
-  add_foreign_key "vehicles", "insurance_policies"
+  add_foreign_key "vehicles", "insurance_certificates"
 end
