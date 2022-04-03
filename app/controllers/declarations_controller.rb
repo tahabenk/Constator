@@ -65,7 +65,7 @@ class DeclarationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def declaration_params
-      params.permit(:report).require(
+      params.require(:declaration).permit(
         :flag_police_report,
         :flag_police_statement,
         :police_station,

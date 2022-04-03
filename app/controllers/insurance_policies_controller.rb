@@ -65,7 +65,7 @@ class InsurancePoliciesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def insurance_policy_params
-      params.permit(:report).require(
+      params.require(:insurance_policy).permit(
         :insured_name,
         :insured_last_name,
         :address,
