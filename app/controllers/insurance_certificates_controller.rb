@@ -65,7 +65,7 @@ class InsuranceCertificatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def insurance_certificate_params
-      params.permit(:report).require(
+      params.require(:insurance_certificate).permit(
         :insurance_policy,
         :insurance_certification_number,
         :international_certification_number,

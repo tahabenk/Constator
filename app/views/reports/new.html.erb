@@ -1,6 +1,29 @@
-<h1>New Report</h1>
+<h1>New Report A</h1>
 <div class='container'>
+
+  <input type="search" placeholder="Enter name..." data-behavior="autocomplete">
 <%# faire une condition si current_user.driver.id existe alors on affiche le formulaire pour le rapport sinon on affiche le formulaire pour le new driver puis une redirection vers new report  %>
+  <div class="form-group">
+    <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
+      <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
+      <label for="vehicle-id">Vehicle:</label>
+      <select id="vehicle-id" name="vehicle" class="form-select" aria-label="Default select example">
+        <option selected>Chose your vehicle</option>
+        <%= Vehicle.all.each do |vehicle| %>
+          <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>>
+        <% end %>
+      </select>
+      <%= report.input :accident_datetime %>
+      <%= report.button :submit, class: 'btn-info' %>
+    <% end %>
+  </div>
+</div>
+
+  <%= render 'form', report: @report %>
+
+  <%= link_to 'Back', reports_path %>
+
+<!--
   <form class="form-input">
     <label for="driver-list">Driver:</label>
     <select id="driver-list" name="driver" class="form-select" aria-label="Default select example">
@@ -9,23 +32,5 @@
         <option value = "<%= driver.id %>"><%= driver.user.name%> <%= driver.user.family_name%></option>>
       <% end %>
     </select>
-
-    <label for="vehicle-list">Vehicle:</label>
-    <select id="vehicle-list" name="vehicle" class="form-select" aria-label="Default select example">
-      <option selected>Chose your vehicle</option>
-      <%= Vehicle.all.each do |vehicle| %>
-        <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>>
-      <% end %>
-    </select>
   </form>
-
-  <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
-    <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
-    <%= report.input :accident_datetime, as: :datetime-local %>
-    <%= report.button :submit, class: 'btn-info' %>
-  <% end %>
-</div>
-
-  <%= render 'form', report: @report %>
-
-  <%= link_to 'Back', reports_path %>
+-->

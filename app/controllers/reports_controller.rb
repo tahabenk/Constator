@@ -28,8 +28,10 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        #create driver report
+
         DriverReport.create(report: @report, driver_id: current_user.driver.id)
+        VehicleAssociation.create(report: @report, vehicle_id: params[:vehicle])
+
         format.html { redirect_to report_url(@report), notice: "Report was successfully created." }
         format.json { render :show, status: :created, location: @report }
       else

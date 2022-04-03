@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_160013) do
+ActiveRecord::Schema.define(version: 2022_03_19_160012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,10 +43,12 @@ ActiveRecord::Schema.define(version: 2022_03_19_160013) do
     t.string "other_damages_thirdparty_name"
     t.string "other_damages_thirdparty_address"
     t.datetime "declaration_datetime"
+    t.bigint "report_id", null: false
     t.bigint "insurance_policy_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["insurance_policy_id"], name: "index_declarations_on_insurance_policy_id"
+    t.index ["report_id"], name: "index_declarations_on_report_id"
   end
 
   create_table "driver_reports", force: :cascade do |t|
@@ -95,15 +97,6 @@ ActiveRecord::Schema.define(version: 2022_03_19_160013) do
     t.string "type_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "report_declarations", force: :cascade do |t|
-    t.bigint "report_id", null: false
-    t.bigint "declaration_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["declaration_id"], name: "index_report_declarations_on_declaration_id"
-    t.index ["report_id"], name: "index_report_declarations_on_report_id"
   end
 
   create_table "report_statuses", force: :cascade do |t|
@@ -170,11 +163,10 @@ ActiveRecord::Schema.define(version: 2022_03_19_160013) do
   add_foreign_key "category_associations", "drivers"
   add_foreign_key "category_associations", "licence_categories"
   add_foreign_key "declarations", "insurance_policies"
+  add_foreign_key "declarations", "reports"
   add_foreign_key "driver_reports", "drivers"
   add_foreign_key "driver_reports", "reports"
   add_foreign_key "drivers", "users"
-  add_foreign_key "report_declarations", "declarations"
-  add_foreign_key "report_declarations", "reports"
   add_foreign_key "reports", "report_statuses"
   add_foreign_key "vehicle_associations", "reports"
   add_foreign_key "vehicle_associations", "vehicles"

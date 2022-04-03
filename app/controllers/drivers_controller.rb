@@ -57,6 +57,8 @@ class DriversController < ApplicationController
     end
   end
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_driver
@@ -65,10 +67,11 @@ class DriversController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def driver_params
-      params.permit(:report).require(
+      params.require(:driver).permit(
         :user,
         :driver_licence_number,
         :driver_licence_end_date
       )
     end
+
 end

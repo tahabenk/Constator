@@ -18,6 +18,7 @@ class CreateDeclarations < ActiveRecord::Migration[6.1]
       t.string :other_damages_thirdparty_name
       t.string :other_damages_thirdparty_address
       t.datetime :declaration_datetime
+      t.references :report, null: false, foreign_key: true
       t.references :insurance_policy, null: false, foreign_key: true
 
       t.timestamps
