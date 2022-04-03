@@ -1,25 +1,32 @@
-<p id="notice"><%= notice %></p>
+<%= render "shared/navbar" %>
+<div class=blurry>
+  <div class="report-bg">
+    <div class="report-title">
+      <div>
+        <h1>Mes véhicules</h1>
+      </div>
+      <div>
+        <%= link_to new_vehicle_path do %>
+          <%= image_tag ("Vector.png") %>
+        <% end %>
+      </div>
+    </div>
+  <% # <%= link_to "New Driver", new_driver_path %>
 
-<h1>Vehicles</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @vehicles.each do |vehicle| %>
-      <tr>
-        <td><%= link_to 'Show', vehicle %></td>
-        <td><%= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
-        <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Vehicle', new_vehicle_path %>
+    <div class="filter">
+      <p><i class="fa-solid fa-filter"></i>  Trier</p>
+    </div>
+      <% @vehicles.each do |vehicle| %>
+        <div class="report-items">
+          <div class="report-info">
+            <p><%= vehicle.registration_number %></p>
+          </div>
+          <div class="report-icons">
+            <%= link_to vehicle do %> <i class="fa-solid fa-eye"></i> <% end %>
+            <%= link_to edit_vehicle_path(vehicle) do %> <i class="fa-solid fa-pen-to-square"></i> <% end %>
+            <%= link_to vehicle, method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa-solid fa-trash-can"></i> <% end %>
+          </div>
+        </div>
+      <% end %>
+  </div>
+</div>
