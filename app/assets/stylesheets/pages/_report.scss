@@ -2,7 +2,7 @@
 background: rgb(0,106,113);
 background: linear-gradient(180deg, rgba(0,106,113,1) 10%, rgba(236,244,243,1) 10%, rgba(236,244,243,1) 100%);
 height: 100vh;
-width:100%;
+width: 100%;
 z-index: -1;
 }
 
@@ -18,6 +18,7 @@ z-index: -1;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 40px;
   h1 {
     color: $constator-dark-green;
     font-size: 36px;
@@ -26,8 +27,46 @@ z-index: -1;
   z-index: 1;
 }
 
+.report-items {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 80px;
+  width: 389px;
+  position: relative;
+  top: 15px;
+  left: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .report-info {
+  margin-left: 10px;
+  width: 100px;
+  display: flex;
+  justify-content: flex-start;
+  }
+
+  .report-icons{
+  margin-right: 10px;
+  width: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  }
+
+}
+
+.filter{
+  color: #FF7E67;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
 form.formulaire-saisie {
   color: $constator-dark-green !important;
   input, option {
     color: $constator-dark-green !important;
   }
+}

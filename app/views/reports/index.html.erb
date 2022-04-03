@@ -11,5 +11,20 @@
         <% end %>
       </div>
     </div>
+    <div class="filter">
+      <p><i class="fa-solid fa-filter"></i>  Trier</p>
+    </div>
+      <% @reports.each do |report| %>
+        <div class="report-items">
+          <div class="report-info">
+            <p><%= report.address %></p>
+          </div>
+          <div class="report-icons">
+            <%= link_to new_report_path do %> <i class="fa-solid fa-eye"></i> <% end %>
+            <%= link_to new_report_path do %> <i class="fa-solid fa-pen-to-square"></i> <% end %>
+            <%= link_to new_report_path, method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa-solid fa-trash-can"></i> <% end %>
+          </div>
+        </div>
+      <% end %>
   </div>
 </div>
