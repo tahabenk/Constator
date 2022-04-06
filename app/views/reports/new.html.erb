@@ -1,23 +1,28 @@
 <h1>New Report A</h1>
-<div class='container'>
-
-  <input type="search" placeholder="Enter name..." data-behavior="autocomplete">
-<%# faire une condition si current_user.driver.id existe alors on affiche le formulaire pour le rapport sinon on affiche le formulaire pour le new driver puis une redirection vers new report  %>
-  <div class="form-group">
-    <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
-      <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
-      <label for="vehicle-id">Vehicle:</label>
-      <select id="vehicle-id" name="vehicle" class="form-select" aria-label="Default select example">
-        <option selected>Chose your vehicle</option>
-        <%= Vehicle.all.each do |vehicle| %>
-          <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>>
-        <% end %>
-      </select>
-      <%= report.input :accident_datetime %>
-      <%= report.button :submit, class: 'btn-info' %>
-    <% end %>
+<% if params[:action] == "new" %>
+  <div class='container'>
+  <%# !@disabled faire un if au global pour fournir une vue différente entre le 1er driver le 2nd%>
+  <%# faire une condition si current_user.driver.id existe alors on affiche le formulaire pour le rapport sinon on affiche le formulaire pour le new driver puis une redirection vers new report  %>
+    <div class="form-group">
+      <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
+        <input type="search" placeholder="Enter name..." data-behavior="autocomplete">
+        <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
+        <label for="vehicle-id">Vehicle:</label>
+        <select id="vehicle-id" name="vehicle" class="form-select" aria-label="Default select example">
+          <option selected>Chose your vehicle</option>
+          <%= Vehicle.all.each do |vehicle| %>
+            <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>>
+          <% end %>
+        </select>
+        <%= report.input :accident_datetime %>
+        <%# disabled: !@disabled %>
+        <%= report.button :submit, class: 'btn-info' %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% else %>
+  <p>else</p>
+<% end %>
 
   <%= render 'form', report: @report %>
 

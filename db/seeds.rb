@@ -6,21 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-#  reports
-Report.destroy_all
-ReportStatus.destroy_all
-puts "database cleaned"
-@status1 = ReportStatus.create(status_description:'started')
-@report1 = Report.new(address: "here", observations: "nothing") #add more
-@report1.report_status = @status1
-@report1.save
-puts "report1 created"
-@report2 = Report.new(address: "here", observations: "nothing") #add more
-@report2.report_status = @status1
-@report2.save
-puts "report2 created"
-
 require 'faker'
+
+ReportStatus.create(status_description:'created')
+ReportStatus.create(status_description:'sent for validation')
+ReportStatus.create(status_description:'sent back for amendment')
+ReportStatus.create(status_description:'refused')
+ReportStatus.create(status_description:'sent for final validation')
+ReportStatus.create(status_description:'sent back for final validation')
 
 User.create!(
   name: 'constator',
@@ -62,6 +55,8 @@ insurers_list = ['RMA', 'Wafa Assurance', 'AtlantaSanad', 'Axa Assurance Maroc']
    )
 end
 
+puts "Insurance policies created"
+
 InsurancePolicy.all.each do |policy|
   InsuranceCertificate.create!(
     insurance_policy_id: policy.id,
@@ -69,7 +64,7 @@ InsurancePolicy.all.each do |policy|
     international_certification_number: Faker::Lorem.characters(number: 20, min_alpha: 4, min_numeric: 2)
   )
 end
-puts "Insurance policies created"
+puts "Insurance certificates created"
 
 InsuranceCertificate.all.each do |certificate|
   br = Faker::Vehicle.make
@@ -82,4 +77,4 @@ InsuranceCertificate.all.each do |certificate|
     gross_weight: rand(500..800)
   )
 end
-puts "Insurance certificates created"
+puts "Vehicles created"
