@@ -13,3 +13,9 @@
     </div>
   </div>
 </div>
+
+<% Report.all.each do |report|%>
+  <% if ownership(report) == "driver 1" || ownership(report) == "driver 2" %>
+    <%= link_to "report #{report.id}", report_path(report) %>
+  <% end %>
+<% end %>

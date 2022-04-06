@@ -11,6 +11,7 @@
     <li><%= link_to "Mes constats", "reports#index"%></li>
     <li><%= link_to "Mes conducteurs", "drivers#index"%></li>
     <li><%= link_to "Mes véhicules", "vehicles#index", class: "nav-element" %></li>
+    <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
   </div>
   </ul>
 </section>

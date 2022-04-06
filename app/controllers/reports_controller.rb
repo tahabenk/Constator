@@ -1,5 +1,7 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[ show edit update destroy ]
+  before_action :action_params
+
 
   # GET /reports or /reports.json
   def index
@@ -13,6 +15,7 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new
+    @owner = ownership
   end
 
   # GET /reports/1/edit
@@ -25,6 +28,7 @@ class ReportsController < ApplicationController
     report_parameters[:report_status_id] = 1
 
     @report = Report.new(report_parameters)
+    @report.user_id = current_user.id
 
     respond_to do |format|
       if @report.save
@@ -64,13 +68,29 @@ class ReportsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_report
-      @report = Report.find(params[:id])
+  def ownership(report)
+    if report.user_id == current_user.id
+        return "driver 1"
+    else
+      @users_on_report = User.joins(driver: :driver_reports).where(driver_reports: { report_id: report.id }).to_a
+    # @users_on_report = User.joins(:drivers, :driver_reports).where(driver_reports: { report_id: @report.id }).distinct
+      if @users_on_report.include?(current_user)
+        return "driver 2"
+      else
+        return "other"
+      end
     end
+  end
+  helper_method :ownership
 
-    # Only allow a list of trusted parameters through.
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_report
+    @report = Report.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
   def report_params
     params.require(:report).permit(
       :accident_datetime,
@@ -82,5 +102,9 @@ class ReportsController < ApplicationController
       :visible_damages,
       :observations
     )
+  end
+
+  def action_params
+    params.permit(:action)
   end
 end
