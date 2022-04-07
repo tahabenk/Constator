@@ -28,8 +28,6 @@ class ReportsController < ApplicationController
     @report = Report.new(report_parameters)
     @report.user_id = current_user.id
 
-    # @report.signatures.attach(signature_params)
-
     respond_to do |format|
       if @report.save
 
@@ -92,20 +90,7 @@ class ReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def report_params
-    params.require(:report).permit(
-      :accident_datetime,
-      :address,
-      :latitude,
-      :longtitude,
-      :flag_injury,
-      :flag_other_damage,
-      :visible_damages,
-      :observations
-    )
-  end
-
-  def signature_params
-     params.require(:report).permit(:signatures)
+    params.permit(:report)
   end
 
   def action_params
