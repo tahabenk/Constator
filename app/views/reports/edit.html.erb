@@ -1,7 +1,9 @@
 <h1>Editing Report</h1>
 
-<% @report.signatures.each do |report| %>
-  <%= cl_image_tag report.key, height: 300, width: 400, crop: :fill %>
+<p>a</p>
+<% @report.signatures.each do |signature| %>
+  <p>+1</p>
+   <%= image_tag signature.representation(resize_to_limit: [100, 100]) %>
 <% end %>
 
 <%= render 'form', report: @report %>
