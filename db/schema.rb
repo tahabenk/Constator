@@ -114,10 +114,13 @@ ActiveRecord::Schema.define(version: 2022_03_19_160012) do
     t.boolean "flag_other_damage"
     t.string "visible_damages"
     t.string "observations"
+    t.string "status_comment"
+    t.bigint "user_id", null: false
     t.bigint "report_status_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["report_status_id"], name: "index_reports_on_report_status_id"
+    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -168,6 +171,7 @@ ActiveRecord::Schema.define(version: 2022_03_19_160012) do
   add_foreign_key "driver_reports", "reports"
   add_foreign_key "drivers", "users"
   add_foreign_key "reports", "report_statuses"
+  add_foreign_key "reports", "users"
   add_foreign_key "vehicle_associations", "reports"
   add_foreign_key "vehicle_associations", "vehicles"
   add_foreign_key "vehicles", "insurance_certificates"
