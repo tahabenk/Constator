@@ -7,6 +7,6 @@ class Report < ApplicationRecord
   has_many :drivers, through: :driver_reports
   has_many :vehicle_associations
   has_many :vehicles, through: :vehicle_associations
-  has_many_attached :signatures
+  has_many_attached :signatures, dependent: :destroy
 
 end

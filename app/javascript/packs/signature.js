@@ -12,8 +12,8 @@ $(document).on('turbolinks:load', function () {
   if (canvas) {
     canvas.height = canvas.offsetHeight;
     canvas.width = canvas.offsetWidth;
-    window.onresize = resizeCanvas(canvas);
-    resizeCanvas(canvas);
+    // window.onresize = resizeCanvas(canvas);
+    // resizeCanvas(canvas);
     const signature_pad = new SignaturePad(canvas, { backgroundColor: '#F7F5F2' });
     $('.signature_pad_clear').click(function () { signature_pad.clear() });
     $('.signature_pad_save').click(function (event) {

@@ -20,15 +20,15 @@
         <%= report.input :signatures, as: :hidden, class: 'signature_pad_input' %>
         <div class="signature_pad text-center">
           <div class="signature_pad_body">
-            <canvas></canvas>
+            <canvas id="canv"></canvas>
           </div>
           <div class="signature_pad_footer">
             <div class="text-muted">Sign above</div>
             <button type="button" class="btn btn-default signature_pad_clear">Clear</button>
-            <%= report.button :submit, 'Save', class: 'btn btn-success signature_pad_save'  %>
+            <%# <%= report.button :submit, 'Save', class: 'btn btn-success signature_pad_save' %>
           </div>
         </div>
-        <%= report.button :submit, class: 'btn-info' %>
+        <%= report.button :submit, class: 'btn-info signature_pad_save' %>
       <% end %>
     </div>
   </div>

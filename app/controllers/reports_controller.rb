@@ -2,7 +2,6 @@ class ReportsController < ApplicationController
   before_action :set_report, only: %i[ show edit update destroy ]
   before_action :action_params
 
-
   # GET /reports or /reports.json
   def index
     @reports = Report.all
@@ -28,6 +27,8 @@ class ReportsController < ApplicationController
 
     @report = Report.new(report_parameters)
     @report.user_id = current_user.id
+
+    # @report.signatures.attach(signature_params)
 
     respond_to do |format|
       if @report.save
@@ -103,11 +104,11 @@ class ReportsController < ApplicationController
     )
   end
 
-  def action_params
-    params.permit(:action)
+  def signature_params
+     params.require(:report).permit(:signatures)
   end
 
-  def document_params
-      params.require(:document).permit(:signatures)
+  def action_params
+    params.permit(:action)
   end
 end
