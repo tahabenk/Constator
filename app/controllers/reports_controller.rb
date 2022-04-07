@@ -15,7 +15,6 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new
-    @owner = ownership
   end
 
   # GET /reports/1/edit
@@ -106,5 +105,9 @@ class ReportsController < ApplicationController
 
   def action_params
     params.permit(:action)
+  end
+
+  def document_params
+      params.require(:document).permit(:signatures)
   end
 end

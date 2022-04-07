@@ -4,6 +4,7 @@
 // that code so it'll be compiled.
 console.log('Hello from application.js')
 
+import "signature_pad"
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
@@ -18,6 +19,7 @@ import "controllers"
 import "bootstrap"
 import "easy-autocomplete"
 import "packs/driver_autocomplete"
+import "packs/signature"
 
 document.addEventListener('turbolinks:load', () => {
   console.log('Good bye from application.js')
