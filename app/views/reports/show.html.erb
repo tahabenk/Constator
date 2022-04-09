@@ -22,6 +22,9 @@
           </div>
         <label class="field">Observations:</label>
         <p class="field-data"><%= @report.observations %></p>
+        <% @report.signatures.each do |signature| %>
+          <%= image_tag signature %>
+        <% end %>
       </div>
     </div>
   </div>

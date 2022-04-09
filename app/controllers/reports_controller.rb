@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[ show edit update destroy ]
+  before_action :set_report, only: [ :show, :edit, :update, :destroy ]
   before_action :action_params
 
   # GET /reports or /reports.json
@@ -28,17 +28,34 @@ class ReportsController < ApplicationController
 
   # POST /reports or /reports.json
   def create
-    report_parameters = report_params
-    report_parameters[:report_status_id] = 1
+    @report = Report.new
+    @report.report_status_id = 1
+    binding.pry
+    @report.accident_datetime = report_params.require(:accident_datetime)
+    @report.driver_1_id = current_user.driver.id
 
-    @report = Report.new(report_parameters)
-    @report.user_id = current_user.id
+    driver_2 = Driver.find(driver_params.split('-')[0])
+    @report.driver_2_id = driver_2.id
+
+    vehicle_1 = Vehicle.find(vehicule_params)
+    @report.vehicle_1_id = vehicle_1.id
+
+    data_uri = report_params[:signatures]
+    encoded_image = data_uri.split(",")[1]
+    decoded_image = Base64.decode64(encoded_image)
+    File.open("signature.png", "wb") { |f| f.write(decoded_image) }
+    @report.signatures.attach(io: File.open('signature.png'), filename: 'signature.png')
+
+    # binding.pry
 
     respond_to do |format|
       if @report.save
 
-        DriverReport.create(report: @report, driver_id: current_user.driver.id)
-        VehicleAssociation.create(report: @report, vehicle_id: params[:vehicle])
+
+        # DriverReport.create(report: @report, driver_id: current_user.driver.id)
+        # DriverReport.create(report: @report, driver_id: driver_id)
+        # Ajouter le 2eme driver mais comment récupérer le 2eme à partir de la recherche DriverReport.create(report: @report, driver_id: current_user.driver.id)
+        # VehicleAssociation.create(report: @report, vehicle_id:  vehicule_params)
 
         format.html { redirect_to report_url(@report), notice: "Report was successfully created." }
         format.json { render :show, status: :created, location: @report }
@@ -72,20 +89,20 @@ class ReportsController < ApplicationController
     end
   end
 
-  def ownership(report)
-    if report.user_id == current_user.id
-        return "driver 1"
-    else
-      @users_on_report = User.joins(driver: :driver_reports).where(driver_reports: { report_id: report.id }).to_a
-    # @users_on_report = User.joins(:drivers, :driver_reports).where(driver_reports: { report_id: @report.id }).distinct
-      if @users_on_report.include?(current_user)
-        return "driver 2"
-      else
-        return "other"
-      end
-    end
-  end
-  helper_method :ownership
+  # def ownership(report)
+  #   if report.user_id == current_user.id
+  #       return "driver 1"
+  #   else
+  #     @users_on_report = User.joins(driver: :driver_reports).where(driver_reports: { report_id: report.id }).to_a
+  #   # @users_on_report = User.joins(:drivers, :driver_reports).where(driver_reports: { report_id: @report.id }).distinct
+  #     if @users_on_report.include?(current_user)
+  #       return "driver 2"
+  #     else
+  #       return "other"
+  #     end
+  #   end
+  # end
+  # helper_method :ownership
 
 
   private
@@ -96,10 +113,19 @@ class ReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def report_params
-    params.permit(:report)
+    params.require(:report).permit(:accident_datetime, :signatures)
+  end
+
+  def vehicule_params
+    params.permit(:vehicle_id).require(:vehicle_id)
+  end
+
+  def driver_params
+    params.permit(:driver).require(:driver)
   end
 
   def action_params
     params.permit(:action)
   end
+
 end

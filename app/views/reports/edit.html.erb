@@ -3,7 +3,7 @@
 <p>a</p>
 <% @report.signatures.each do |signature| %>
   <p>+1</p>
-   <%= image_tag signature.representation(resize_to_limit: [100, 100]) %>
+   <%= image_tag signature %>
 <% end %>
 
 <%= render 'form', report: @report %>
