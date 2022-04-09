@@ -30,8 +30,9 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new
     @report.report_status_id = 1
-    binding.pry
-    @report.accident_datetime = report_params.require(:accident_datetime)
+    datetime=DateTime.civil(report_params["accident_datetime(1i)"].to_i, report_params["accident_datetime(2i)"].to_i, report_params["accident_datetime(3i)"].to_i,
+                            report_params["accident_datetime(4i)"].to_i,report_params["accident_datetime(5i)"].to_i, 0)
+    @report.accident_datetime = datetime
     @report.driver_1_id = current_user.driver.id
 
     driver_2 = Driver.find(driver_params.split('-')[0])
