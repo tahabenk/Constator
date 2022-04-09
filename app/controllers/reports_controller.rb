@@ -9,6 +9,12 @@ class ReportsController < ApplicationController
 
   # GET /reports/1 or /reports/1.json
   def show
+    @markers =
+      [{
+        lat: @report.latitude,
+        lng: @report.longitude,
+        image_url: helpers.asset_url("https://www.pngplay.com/wp-content/uploads/14/Flintstones-Car-Transparent-PNG.png")
+      }]
   end
 
   # GET /reports/new

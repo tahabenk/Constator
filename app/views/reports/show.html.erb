@@ -1,8 +1,31 @@
-<p id="notice"><%= notice %></p>
-<% @report.signatures.each do |signature| %>
-  <p>+1</p>
-   <%= image_tag signature %>
-<% end %>
-
-<%= link_to 'Edit', edit_report_path(@report) %> |
-<%= link_to 'Back', reports_path %>
+<%= render "shared/navbar" %>
+<div class=blurry>
+  <div class="report-bg">
+    <div class="report-show-infos">
+      <div class="report-header">
+        <div>
+          <h1>Constat</h1>
+        </div>
+        <div>
+              <%= link_to edit_report_path(@report) do %> <i class="fa-solid fa-pen-to-square"></i> <% end %>
+              <%= link_to @report, method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa-solid fa-trash-can"></i> <% end %>
+        </div>
+      </div>
+      <div class="report-infos">
+        <div class="d-flex"><label class="field">Date:</label><p class="field-time"><%= @report.created_at.strftime("%A %d %B,%Y") %></p></div>
+        <div class="d-flex"><label class="field">Status:</label><p class="field-time"><%= @report.report_status.status_description %></p></div>
+        <label class="field">Address:</label>
+        <p class="field-data"><%= @report.address %></p>
+          <div id="map" class="map-report"
+            data-markers="<%= @markers.to_json %>"
+            data-mapbox-api-key="<%= ENV["MAPBOX_API_KEY"] %>">
+          </div>
+        <label class="field">Observations:</label>
+        <p class="field-data"><%= @report.observations %></p>
+        <% @report.signatures.each do |signature| %>
+          <%= image_tag signature %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

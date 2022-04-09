@@ -24,3 +24,9 @@ import "packs/signature"
 document.addEventListener('turbolinks:load', () => {
   console.log('Good bye from application.js')
 })
+
+import { initMapbox } from '../plugins/init_mapbox';
+
+document.addEventListener('turbolinks:load', () => {
+  initMapbox();
+})
