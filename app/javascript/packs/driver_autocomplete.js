@@ -8,7 +8,5 @@ document.addEventListener("turbolinks:load", function () {
   };
 
   console.log(options);
-  console.log('options defined');
   $('*[data-behavior="autocomplete"]').easyAutocomplete(options);
-  console.log('autocomplete targeted');
 });

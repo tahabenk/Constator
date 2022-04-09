@@ -5,10 +5,11 @@
   <%# faire une condition si current_user.driver.id existe alors on affiche le formulaire pour le rapport sinon on affiche le formulaire pour le new driver puis une redirection vers new report  %>
     <div class="form-group">
       <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
-        <input type="search" placeholder="Enter name..." data-behavior="autocomplete">
+        <input type="search" id="driver" name="driver" placeholder="Enter name..." data-behavior="autocomplete">
+
         <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
-        <label for="vehicle-id">Vehicle:</label>
-        <select id="vehicle-id" name="vehicle" class="form-select" aria-label="Default select example">
+        <label for="vehicle_id">Vehicle:</label>
+        <select id="vehicle_id" name="vehicle_id" class="form-select" aria-label="Default select example">
           <option selected>Chose your vehicle</option>
           <%= Vehicle.all.each do |vehicle| %>
             <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>>
@@ -25,7 +26,7 @@
           <div class="signature_pad_footer">
             <div class="text-muted">Sign above</div>
             <button type="button" class="btn btn-default signature_pad_clear">Clear</button>
-            <%# <%= report.button :submit, 'Save', class: 'btn btn-success signature_pad_save' %>
+            <button type="button" class="btn btn-default signature_pad_save">save</button>
           </div>
         </div>
         <%= report.button :submit, class: 'btn-info signature_pad_save' %>

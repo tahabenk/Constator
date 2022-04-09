@@ -30,7 +30,7 @@
 </div>
 
 <% Report.all.each do |report|%>
-  <% if ownership(report) == "driver 1" || ownership(report) == "driver 2" %>
+  <% if current_user.driver.id == report.driver_1_id || current_user.driver.id == report.driver_2_id %>
     <%= link_to "report #{report.id}", report_path(report) %>
   <% end %>
 <% end %>

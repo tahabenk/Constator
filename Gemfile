@@ -34,6 +34,11 @@ gem 'faker'
 # Pundit
 gem 'pundit'
 
+# Data URI
+gem 'data_uri'
+
+gem 'active_storage_base64'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

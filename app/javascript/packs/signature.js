@@ -9,12 +9,14 @@ function resizeCanvas(canvas) {
 
 $(document).on('turbolinks:load', function () {
   var canvas = document.querySelector("canvas");
+
   if (canvas) {
     canvas.height = canvas.offsetHeight;
     canvas.width = canvas.offsetWidth;
     // window.onresize = resizeCanvas(canvas);
     // resizeCanvas(canvas);
     const signature_pad = new SignaturePad(canvas, { backgroundColor: '#F7F5F2' });
+    console.log(signature_pad.toDataURL())
     $('.signature_pad_clear').click(function () { signature_pad.clear() });
     $('.signature_pad_save').click(function (event) {
       if (signature_pad.isEmpty()) {

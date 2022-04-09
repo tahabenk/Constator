@@ -10,10 +10,14 @@ class CreateReports < ActiveRecord::Migration[6.1]
       t.string :visible_damages
       t.string :observations
       t.string :status_comment
-      t.references :user, null: false, foreign_key: true
-      t.references :report_status, null: false, foreign_key: true
+      t.integer :driver_1_id, null: false
+      t.integer :driver_2_id, null: true
+      t.integer :vehicle_1_id, null: false
+      t.integer :vehicle_2_id, null: true
+      t.references :report_status, null: false
 
       t.timestamps
     end
+
   end
 end
