@@ -3,7 +3,8 @@ class AutocompleteController < ActionController::Base
 
   def search
     q = params[:q].downcase
-    @drivers = User.where("name ILIKE ? or family_name ILIKE ?", "%#{q}%", "%#{q}%").limit(5)
+    @drivers = User.where("id <> ? and (name ILIKE ? or family_name ILIKE ?)", "#{current_user.id}", "%#{q}%", "%#{q}%").limit(5)
+
   end
 
   private
