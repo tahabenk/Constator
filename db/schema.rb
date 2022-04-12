@@ -187,10 +187,12 @@ ActiveRecord::Schema.define(version: 2022_04_07_010356) do
     t.string "registration_number"
     t.string "chassis_number"
     t.bigint "insurance_certificate_id", null: false
+    t.bigint "user_id", null: false
     t.integer "gross_weight"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["insurance_certificate_id"], name: "index_vehicles_on_insurance_certificate_id"
+    t.index ["user_id"], name: "index_vehicles_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -205,4 +207,5 @@ ActiveRecord::Schema.define(version: 2022_04_07_010356) do
   add_foreign_key "vehicle_associations", "reports"
   add_foreign_key "vehicle_associations", "vehicles"
   add_foreign_key "vehicles", "insurance_certificates"
+  add_foreign_key "vehicles", "users"
 end

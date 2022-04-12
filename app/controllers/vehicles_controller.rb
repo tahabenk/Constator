@@ -72,6 +72,7 @@ class VehiclesController < ApplicationController
         :chassis_number,
         :insurance_policy,
         :gross_weight,
+        :user_id
       )
     end
 end
