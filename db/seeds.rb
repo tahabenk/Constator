@@ -74,7 +74,8 @@ InsuranceCertificate.all.each do |certificate|
     model: Faker::Vehicle.model(make_of_model: br),
     registration_number: Faker::Vehicle.license_plate,
     chassis_number:Faker::Vehicle.vin,
-    gross_weight: rand(500..800)
+    gross_weight: rand(500..800),
+    user_id:rand(1..2)
   )
 end
 puts "Vehicles created"

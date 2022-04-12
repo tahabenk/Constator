@@ -1,5 +1,16 @@
 <h1>Editing Report</h1>
 
+
+<% if current_user.driver.id == @report.driver_1_id %>
+  <% disable_driver_1 = false%>
+  <% disable_driver_2 = true %>
+<% else %>
+  <% disable_driver_1 = true %>
+  <% disable_driver_2 = false %>
+<% end %>
+
+<p>disable_driver_1 : <%= disable_driver_1 %> disable_driver_2 : <%= disable_driver_2 %> </p>
+
 <p>a</p>
 <% @report.signatures.each do |signature| %>
   <p>+1</p>
