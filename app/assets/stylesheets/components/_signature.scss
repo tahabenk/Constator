@@ -1,7 +1,9 @@
 .signature_pad {
-  width: 500px;
-  height: 200px;
+  width: 350px;
   margin: 0 auto;
+  canvas {
+    height: 500px !important;
+  }
 }
 
 .signature_pad_body canvas {
@@ -9,8 +11,4 @@
   height: 100%;
   border: dotted #444;
   color: black;
-}
-
-.signature_show_report {
-  width: 40%;
 }
