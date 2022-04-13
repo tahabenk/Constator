@@ -12,8 +12,8 @@
         </div>
       </div>
       <div class="report-infos">
-        <div class="d-flex"><label class="field">Date:</label><p class="field-time"><%= @report.created_at.strftime("%A %d %B,%Y") %></p></div>
-        <div class="d-flex"><label class="field">Status:</label><p class="field-time"><%= @report.report_status.status_description %></p></div>
+        <div class="d-flex"><label class="field">Date:</label><p class="field-data2"><%= @report.created_at.strftime("%A %d %B,%Y") %></p></div>
+        <div class="d-flex"><label class="field">Status:</label><p class="field-data2"><%= @report.report_status.status_description %></p></div>
         <label class="field">Address:</label>
         <p class="field-data"><%= @report.address %></p>
           <div id="map" class="map-report"

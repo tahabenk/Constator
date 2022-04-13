@@ -1,56 +1,16 @@
-<h1>New Report A</h1>
-<% if params[:action] == "new" %>
-  <div class='container'>
-  <%# !@disabled faire un if au global pour fournir une vue différente entre le 1er driver le 2nd%>
-  <%# faire une condition si current_user.driver.id existe alors on affiche le formulaire pour le rapport sinon on affiche le formulaire pour le new driver puis une redirection vers new report  %>
-    <div class="form-group">
-      <%= simple_form_for @report, html: {class: 'formulaire-saisie'} do |report| %>
-        <input type="search" id="driver" name="driver" placeholder="Enter name..." data-behavior="autocomplete">
-
-        <%# <%= report.association :report_status, label_method: :status_description, include_blank: false, class: 'formulaire-saisie' %>
-        <label for="vehicle_id">Vehicle:</label>
-        <select id="vehicle_id" name="vehicle_id" class="form-select" aria-label="Default select example">
-          <option selected>Chose your vehicle</option>
-          <%= Vehicle.all.each do |vehicle| %>
-            <% if vehicle.user_id == current_user.id %>
-              <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>
-            <% end %>
-          <% end %>
-        </select>
-        <%= report.input :accident_datetime %>
-        <%# disabled: !@disabled %>
-
-        <%= report.input_field :signatures, as: :hidden, class: 'signature_pad_input' %>
-        <div class="signature_pad text-center">
-          <div class="signature_pad_body">
-            <canvas id="canv"></canvas>
-          </div>
-          <div class="signature_pad_footer">
-            <div class="text-muted">Sign above</div>
-            <button type="button" class="btn btn-default signature_pad_clear">Clear</button>
-            <button type="button" class="btn btn-default signature_pad_save">save</button>
-          </div>
-        </div>
-        <%= report.button :submit, class: 'btn-info signature_pad_save' %>
-      <% end %>
+<%= render "shared/navbar" %>
+<div class="report-bg">
+  <div class="report-show-infos">
+    <div class="report-header">
+      <div>
+        <h1>Nouveau Constat</h1>
+      </div>
     </div>
-  </div>
-<% else %>
-  <p>else</p>
-<% end %>
-
-  <%= render 'form', report: @report %>
-
-  <%= link_to 'Back', reports_path %>
-
-<!--
-  <form class="form-input">
-    <label for="driver-list">Driver:</label>
-    <select id="driver-list" name="driver" class="form-select" aria-label="Default select example">
-      <option selected>Chose your driver</option>
-      <%= Driver.all.each do |driver| %>
-        <option value = "<%= driver.id %>"><%= driver.user.name%> <%= driver.user.family_name%></option>>
+      <% if params[:action] == "new" %>
+        <%# !@disabled faire un if au global pour fournir une vue différente entre le 1er driver le 2nd%>
+        <%= render "reports/form_create_report" %>
       <% end %>
-    </select>
-  </form>
--->
+  </div>
+  <div style="height:1vh;width:100%">
+  </div>
+</div>
