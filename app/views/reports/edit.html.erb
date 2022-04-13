@@ -1,23 +1,56 @@
 <h1>Editing Report</h1>
 
+<%# ajouter case sur le report status et combiner le resultat true false avec un and sur le disable driver deja defini %>
 
-<% if current_user.driver.id == @report.driver_1_id %>
-  <% disable_driver_1 = false%>
-  <% disable_driver_2 = true %>
-<% else %>
-  <% disable_driver_1 = true %>
-  <% disable_driver_2 = false %>
-<% end %>
+<div class='container'>
+  <div class="form-group">
+    <h2>Driver 1</h2>
 
-<p>disable_driver_1 : <%= disable_driver_1 %> disable_driver_2 : <%= disable_driver_2 %> </p>
+    <%= simple_form_for @report, url: report_path(@report) do |f| %>
+      <%= f.fields_for @driver_1 do |g| %>
+          <%= g.text_field :driver_licence_number, value: @driver_1.driver_licence_number, disabled: @disable_driver_1 %>
+      <% end %>
+      <%= f.fields_for current_user do |h| %>
+        <%= h.text_field :family_name, value: current_user.family_name, disabled: @disable_driver_1%>
+      <% end %>
+      <%= f.label :vehicle %>
+      <%= f.collection_select :vehicle_1_id, current_user.vehicles, :id, :vehicle_name, {selected: @vehicle_1.id } %>
+      <%= f.text_field :address, label: "Address", value: @report.address, disabled: @disable_driver_1 %>
+      <%= f.text_field :observations, label: "Observations", value: @report.observations, disabled: @disable_driver_1 %>
+      <% if @disable_driver_1 %>
+        <p><%= @report.signature_driver_1.filename.to_s %></p>
+        <%= image_tag @report.signature_driver_1 %>
+      <% else %>
+        <%= f.input_field :signature_driver_1, as: :hidden, class: 'signature_pad_input', disabled: @disable_driver_1 %>
+          <div class="signature_pad text-center">
+            <div class="signature_pad_body">
+              <canvas id="canv"></canvas>
+            </div>
+            <div class="signature_pad_footer">
+              <div class="text-muted">Sign above</div>
+              <button type="button" class="btn btn-default signature_pad_clear">Clear</button>
+            </div>
+          </div>
+      <% end %>
 
-<p>a</p>
-<% @report.signatures.each do |signature| %>
-  <p>+1</p>
-   <%= image_tag signature %>
-<% end %>
+      <hr>
+      <h2>Driver 2</h2>
+      <%= f.button :submit, class: 'btn-info signature_pad_save' %>
+    <% end %>
 
-<%= render 'form', report: @report %>
 
+  </div>
+</div>
+
+
+<%# Données du driver 1 (disabled pour le driver 2) %>
+<%# Données du driver 2 (disabled pour le driver 1) %>
+<%# Données du constat (adresse, heure, schéma => disabled pour le driver 2) %>
+
+<%# boutton validé ou refusé %>
+<%# champ commentaire %>
+
+
+<%# <%= render 'form', report: @report %>
 <%= link_to 'Show', @report %> |
 <%= link_to 'Back', reports_path %>

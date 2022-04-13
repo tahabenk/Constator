@@ -7,7 +7,10 @@ class Report < ApplicationRecord
   has_many :drivers, through: :driver_reports
   has_many :vehicle_associations
   has_many :vehicles, through: :vehicle_associations
-  has_many_attached :signatures, dependent: :destroy
+  # has_many_attached :signatures, dependent: :destroy
+  has_one_attached :signature_driver_1, dependent: :destroy
+  has_one_attached :signature_driver_2, dependent: :destroy
+  has_one_attached :schema, dependent: :destroy
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
 end
