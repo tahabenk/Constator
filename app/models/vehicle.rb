@@ -8,4 +8,5 @@ class Vehicle < ApplicationRecord
   def vehicle_name
       "#{id} - #{registration_number}, #{brand} #{model}"
   end
+  # comment
 end
