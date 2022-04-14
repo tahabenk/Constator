@@ -30,25 +30,24 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new
     @report.report_status_id = 1
-    datetime=DateTime.civil(report_params["accident_datetime(1i)"].to_i, report_params["accident_datetime(2i)"].to_i, report_params["accident_datetime(3i)"].to_i,
-                            report_params["accident_datetime(4i)"].to_i,report_params["accident_datetime(5i)"].to_i, 0)
+    datetime = report_params["accident_datetime"].to_date
     @report.accident_datetime = datetime
     @report.driver_1_id = current_user.driver.id
-
+    @report.address = report_params["address"]
     driver_2 = Driver.find(driver_params.split('-')[0])
     @report.driver_2_id = driver_2.id
 
     vehicle_1 = Vehicle.find(vehicule_params)
     @report.vehicle_1_id = vehicle_1.id
 
-    data_uri = report_params[:signatures]
-    encoded_image = data_uri.split(",")[1]
-    decoded_image = Base64.decode64(encoded_image)
-    File.open("signature.png", "wb") { |f| f.write(decoded_image) }
-    @report.signatures.attach(io: File.open('signature.png'), filename: 'signature.png')
-
-    # binding.pry
-
+    data_uri = report_params[:drawing]
+    # encoded_image = data_uri.split(",")[1]
+    # decoded_image = Base64.decode64(data_uri)
+    # File.open("accident-drawing.png", "wb") { |f| f.write(decoded_image) }
+    image_data = Base64.decode64(data_uri["data:image/png;base64,".length..-1])
+    new_file = File.new("accident-drawing.png", "wb")
+    new_file.write(image_data)
+    @report.drawing.attach(io: File.open("accident-drawing.png"), content_type: "image/png", filename: "accident-drawing.png")
     respond_to do |format|
       if @report.save
 
@@ -114,7 +113,7 @@ class ReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def report_params
-    params.require(:report).permit(:accident_datetime, :signatures)
+    params.require(:report).permit(:accident_datetime, :signatures, :address, :observations, :drawing)
   end
 
   def vehicule_params

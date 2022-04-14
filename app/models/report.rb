@@ -8,6 +8,7 @@ class Report < ApplicationRecord
   has_many :vehicle_associations
   has_many :vehicles, through: :vehicle_associations
   has_many_attached :signatures, dependent: :destroy
+  has_one_attached :drawing
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
 end
