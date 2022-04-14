@@ -102,13 +102,17 @@ class ReportsController < ApplicationController
       @report.signature_driver_1.purge
       @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
 
-      if current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && !@report.signature_driver_2.attached?
+
+      # mettre un bouton refus qui passe le statut à 3 (refusé driver 2, à revoir driver 1)
+      if current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && !@report.signature_driver_2.attached? && @report.report_status_id == 1
         @report.report_status_id = 2
-      elsif current_user.driver.id != @report.driver_1_id && @report.signature_driver_1.attached? && !@report.signature_driver_2.attached?
-        @report.report_status_id = 3
-      else report.signature_driver_1.attached? && @report.signature_driver_2.attached?
-        @report.report_status_id = 6
+      elsif current_user.driver.id == @report.driver_2_id && @report.signature_driver_1.attached? && @report.report_status_id == 2 && @report.signature_driver_2.attached?
+        @report.report_status_id = 4
+      elsif current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && @report.report_status_id == 3
+        @report.report_status_id = 2
+      else @report.report_status_id = 5
       end
+      # comment
 
     end
   end
