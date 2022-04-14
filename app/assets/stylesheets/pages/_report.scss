@@ -46,6 +46,7 @@ z-index: -1;
   width: 100px;
   display: flex;
   justify-content: flex-start;
+  flex-grow: 1;
   }
 
   .report-icons{
@@ -111,7 +112,7 @@ z-index: -1;
     color: $constator-dark-green;
     font-size: 16px;
     font-weight: bold;
-    margin-left: 10px;
+    margin-left: 2px;
     margin-top: 20px;
   }
 }
