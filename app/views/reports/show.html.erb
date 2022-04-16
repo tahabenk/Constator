@@ -24,13 +24,13 @@
         <p class="field-data"><%= @report.observations %></p>
         <div class="map-report">
         <% if @report.drawing.attached? %>
-          <%= cl_image_tag @report.drawing.key, style: "width= 200px"%>
+          <%= cl_image_tag @report.drawing.key, style: "width= 200px" %>
           <% else %>
           <p>Pas de dessin</p>
-        <% end %x>
+        <% end %>
 
         </div>
-        <% if @report.signature_driver_1.attached? %>
+         <% if @report.signature_driver_1.attached? %>
           <%= image_tag @report.signature_driver_1 %>
         <% end %>
         <% if @report.signature_driver_2.attached? %>
