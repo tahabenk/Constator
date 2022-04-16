@@ -26,11 +26,7 @@
           </div>
         </div>
       <% end %>
+  <div style="height:1vh;width:100%">
+  </div>
   </div>
 </div>
-
-<% Report.all.each do |report|%>
-  <% if current_user.driver.id == report.driver_1_id || current_user.driver.id == report.driver_2_id %>
-    <%= link_to "report #{report.id}", report_path(report) %>
-  <% end %>
-<% end %>

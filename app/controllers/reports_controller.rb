@@ -14,7 +14,7 @@ class ReportsController < ApplicationController
       [{
         lat: @report.latitude,
         lng: @report.longitude,
-        image_url: helpers.asset_url("https://www.pngplay.com/wp-content/uploads/14/Flintstones-Car-Transparent-PNG.png")
+        image_url: helpers.asset_url("https://www.pngplay.com/wp-content/uploads/12/Car-Crash-Background-PNG.png")
       }]
   end
 
@@ -63,6 +63,7 @@ class ReportsController < ApplicationController
     new_file = File.new("accident-drawing.png", "wb")
     new_file.write(image_data)
     @report.drawing.attach(io: File.open("accident-drawing.png"), content_type: "image/png", filename: "accident-drawing.png")
+
     respond_to do |format|
       if @report.save
 

@@ -12,16 +12,21 @@
         </div>
       </div>
       <div class="report-infos">
-        <div class="d-flex"><label class="field">Date:</label><p class="field-data"><%= @report.created_at.strftime("%A %d %B,%Y") %></p></div>
-        <div class="d-flex"><label class="field">Status:</label><p class="field-data"><%= @report.report_status.status_description %></p></div>
-        <label class="field">Address:</label>
-        <p class="field-data"><%= @report.address %></p>
+        <div class="parent_show">
+          <div class="div1"><label class="field">Date:</label></div>
+          <div class="div2"><p class="field-data"><%= @report.created_at.strftime("%A %d %B,%Y") %></p></div>
+          <div class="div3"><label class="field">Status:</label></div>
+          <div class="div4"><p class="field-data"><%= @report.report_status.status_description %></p></div>
+          <div class="div5"><label class="field">Notes:</label></div>
+          <div class="div6"><p class="field-data"><%= @report.observations %></p></div>
+          <div class="div7"><label class="field">Address:</label></div>
+          <div class="div8"><p class="field-data"><%= @report.address %></p></div>
+        </div>
           <div id="map" class="map-report"
             data-markers="<%= @markers.to_json %>"
             data-mapbox-api-key="<%= ENV["MAPBOX_API_KEY"] %>">
           </div>
-        <label class="field">Observations:</label>
-        <p class="field-data"><%= @report.observations %></p>
+        <label class="field">Dessin de l'accident:</label>
         <div class="map-report">
         <% if @report.drawing.attached? %>
           <%= cl_image_tag @report.drawing.key, style: "width= 200px" %>
@@ -36,6 +41,8 @@
         <% if @report.signature_driver_2.attached? %>
           <%= image_tag @report.signature_driver_2 %>
         <% end %>
+        <div style="height:2vh;width:100%">
+        </div>
       </div>
     </div>
   </div>

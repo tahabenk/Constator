@@ -1,101 +1,166 @@
-<h1>Editing Report</h1>
-
-<%# ajouter case sur le report status et combiner le resultat true false avec un and sur le disable driver deja defini %>
-
-<div class='container'>
+<%= render "shared/navbar" %>
+<div class="report-bg">
+  <div class="report-show-infos">
+    <div class="report-header">
+      <div>
+        <h1>Modifier le Constat</h1>
+      </div>
+    </div>
+  <div class='container'>
   <div class="form-group">
-    <h2>Driver 1</h2>
-    <p>Driver 1 disabled : <%= @disable_driver_1 %> </p>
-
+    <h2 style="text-align:center">Premier Conducteur</h2>
     <%= simple_form_for @report, url: report_path(@report) do |f| %>
+    <div class= "parent_new">
       <%= f.fields_for @driver_1 do |g| %>
-          <%= g.text_field :driver_licence_number, value: @driver_1.driver_licence_number, disabled: @disable_driver_1 %>
+      <div class="div1">
+        <label for="report_driver_driver_licence_number" class="field_edit">Permis N°:</label>
+      </div>
+      <div class="div2">
+        <input value="<%= @driver_1.driver_licence_number %>" type="text" name="report[driver][driver_licence_number]" id="report_driver_driver_licence_number" class="field-writer" <%= @disable_driver_1 ? "disabled" : "" %>>
+      </div>
       <% end %>
-      <%= f.fields_for current_user do |h| %>
-        <%= h.text_field :family_name, value: current_user.family_name, disabled: @disable_driver_1%>
+      <%= f.fields_for @driver_1.user do |h| %>
+      <div class="div3">
+        <label for="report_user_family_name" class="field_edit">Conducteur:</label>
+      </div>
+      <div class="div4">
+        <input value="<%= @driver_1.user.family_name %>" type="text" name="report[user][family_name]" id="report_user_family_name" class="field-writer" <%= @disable_driver_1 ? "disabled" : "" %>>
+      </div>
       <% end %>
-      <%= f.label :vehicle %>
-      <%= f.collection_select :vehicle_1_id, current_user.vehicles, :id, :vehicle_name, {selected: @vehicle_1.id }, disabled: @disable_driver_1 %>
-      <%= f.text_field :address, label: "Address", value: @report.address, disabled: @disable_driver_1 %>
-      <%= f.text_field :observations, label: "Observations", value: @report.observations, disabled: @disable_driver_1 %>
+      <div class="div5">
+        <label class="field_edit">Véhicule:</label>
+      </div>
+      <div class="div6">
+        <%= f.collection_select :vehicle_1_id, current_user.vehicles, :id, :vehicle_name, { selected: @vehicle_1.id }, disabled: @disable_driver_1, class:"field-writer", style:"width:188px" %>
+      </div>
+      <div class="div7">
+        <label class="field_edit">Address:</label>
+      </div>
+      <div class="div8">
+        <%= f.text_field :address, label: "Address", value: @report.address, disabled: @disable_driver_1, class:"field-writer" %>
+      </div>
+      <div class="div9">
+      <label class="field_edit">Observations:</label>
+      </div>
+      <div class="div10">
+      <%= f.text_field :observations, label: "Observations", value: @report.observations, disabled: @disable_driver_1, class:"field-writer" %>
+      </div>
+      </div>
       <% if @disable_driver_1 %>
         <p><%= @report.signature_driver_1.filename.to_s %></p>
         <%= image_tag @report.signature_driver_1 %>
       <% else %>
-        <%= f.input_field :signature_driver_1, as: :hidden, class: 'signature_pad_input', disabled: @disable_driver_1 %>
+        <%= f.input_field :signature_driver_1, as: :hidden, class: "signature_pad_input", disabled: @disable_driver_1 %>
           <div class="signature_pad text-center">
+            <div class="text-muted">Signer ici</div>
             <div class="signature_pad_body">
               <canvas id="canv"></canvas>
             </div>
             <div class="signature_pad_footer">
-              <div class="text-muted">Sign above</div>
-              <button type="button" class="btn btn-default signature_pad_clear">Clear</button>
+              <button type="button" class="btn btn-default signature_pad_clear">Supprimer le dessin</button>
+              </div>
             </div>
           </div>
       <% end %>
 
+
       <hr>
-      <h2>Driver 2</h2>
+      <h2 style="text-align:center">Dessin de l'accident</h2>
+      <p><% @report.drawing.filename.to_s %></p>
+      <div class="map-report">
+      <%= image_tag @report.drawing %>
+      <%= f.input_field :drawing, as: :hidden, class: "signature_pad_input" %>
+      </div>
+      <div style="height:1vh;width:100%">
+      </div>
+      <hr>
 
-      <p>Driver 2 disabled : <%= @disable_driver_2 %> </p>
-
-      <%= f.fields_for @driver_2 do |g| %>
-          <%= g.text_field :driver_licence_number, value: @driver_2.driver_licence_number, disabled: @disable_driver_2 %>
-      <% end %>
-      <%= f.fields_for current_user do |h| %>
-        <%= h.text_field :family_name, value: current_user.family_name, disabled: @disable_driver_2 %>
-      <% end %>
-
-      <% if @report.vehicle_2_id.nil? %>
-        <label for="vehicle_2_id">Vehicle:</label>
-        <select id="vehicle_2_id" name="vehicle_2_id" class="form-select" <%= @disable_driver_2? 'disabled' : '' %> >
-          <option selected>Chose your vehicle</option>
-          <%= Vehicle.all.each do |vehicle| %>
-            <% if vehicle.user_id == current_user.id %>
-              <option value = "<%= vehicle.id %>"><%= vehicle.registration_number%> <%= vehicle.brand %> <%= vehicle.model %></option>
+      <h2 style="text-align:center">Deuxième conducteur</h2>
+      <div class="parent_new">
+        <%= f.fields_for @driver_2 do |g| %>
+          <div class="div1">
+            <label for="report_driver_driver_licence_number" class="field_edit">Permis N°:</label>
+          </div>
+          <div class="div2">
+            <input value="<%= @driver_2.driver_licence_number %>" type="text" name="report[driver][driver_licence_number]" id="report_driver_driver_licence_number" class="field-writer">
+          </div>
+        <% end %>
+        <%= f.fields_for @driver_2.user do |h| %>
+          <div class="div3">
+            <label for="report_user_family_name" class="field_edit">Conducteur:</label>
+          </div>
+          <div class="div4">
+            <input value="<%= @driver_2.user.family_name %>" type="text" name="report[user][family_name]" id="report_user_family_name" class="field-writer" <%= @disable_driver_2 ? "disabled" : "" %>>
+          </div>
+        <% end %>
+        <% if @report.vehicle_2_id.nil? %>
+          <div class="div5">
+            <label for="vehicle_2_id" class="field_edit">Véhicule:</label>
+          </div>
+          <div class="div6">
+          <select id="vehicle_2_id" name="vehicle_2_id" class="form-select field-writer" style="width:188px" <%= @disable_driver_2 ? "disabled" : "" %>>
+            <option selected>Choisir son véhicule</option>
+            <%= Vehicle.all.each do |vehicle| %>
+              <% if vehicle.user_id == current_user.id %>
+                <option value = "<%= vehicle.id %>"><%= vehicle.registration_number %> <%= vehicle.brand %> <%= vehicle.model %></option>
+              <% end %>
             <% end %>
-          <% end %>
-        </select>
-      <% else %>
-        <%= f.collection_select :vehicle_2_id, @driver_2.user.vehicles, :id, :vehicle_name, {selected: @vehicle_2.id }, disabled: @disable_driver_2 %>
-      <% end %>
-      <%= f.text_field :address, label: "Address", value: @report.address, disabled: @disable_driver_2 %>
-      <%= f.text_field :observations, label: "Observations", value: @report.observations, disabled: @disable_driver_2 %>
+          </select>
+        <% else %>
+          <%= f.collection_select :vehicle_2_id, @driver_2.user.vehicles, :id, :vehicle_name, { selected: @vehicle_2.id }, disabled: @disable_driver_2 %>
+        <% end %>
+        </div>
+        <div class="div7">
+        <label class="field_edit">Address:</label>
+        </div>
+        <div class="div8">
+          <%= f.text_field :address, label: "Address", value: @report.address, disabled: @disable_driver_2, class: "field-writer" %>
+        </div>
+        <div class="div9">
+        <label class="field_edit">Observations:</label>
+        </div>
+        <div class="div10">
+        <%= f.text_field :observations, label: "Observations", value: @report.observations, disabled: @disable_driver_1, class: "field-writer" %>
+        </div>
+      </div>
       <% if @disable_driver_2 && @report.signature_driver_2.attached? %>
         <p><%= @report.signature_driver_2.filename.to_s %></p>
         <%= image_tag @report.signature_driver_2 %>
       <% else %>
-        <%= f.input_field :signature_driver_2, as: :hidden, class: 'signature_pad_input', disabled: @disable_driver_2 %>
+        <%= f.input_field :signature_driver_2, as: :hidden, class: "signature_pad_input", disabled: @disable_driver_2 %>
           <div class="signature_pad text-center">
+            <div class="text-muted">Signer ici</div>
             <div class="signature_pad_body">
               <canvas id="canv"></canvas>
             </div>
             <div class="signature_pad_footer">
-              <div class="text-muted">Sign above</div>
-              <button type="button" class="btn btn-default signature_pad_clear">Clear</button>
+              <button type="button" class="btn btn-default signature_pad_clear">Supprimer la signature</button>
             </div>
           </div>
       <% end %>
 
-
-      <%= f.button :submit, class: 'btn-success' %>
-      <%= f.button :submit, 'Validate', class: 'btn-primary signature_pad_save' %>
-      <%= f.button :submit, "Refuse", class: 'btn-info' %>
+      <%= f.button :submit,class: 'btn-success' %>
+      <%= f.button :submit, "Valider le constat", class: 'btn-accept-report' %>
+      <%= f.button :submit, "Refuser le constat", class: 'btn-refuse-report' %>
     <% end %>
 
-  <%# comment  %>
+  <% # comment %>
+  </div>
+  </div>
+  <div style="height:1vh;width:100%">
   </div>
 </div>
 
 
-<%# Données du driver 1 (disabled pour le driver 2) %>
-<%# Données du driver 2 (disabled pour le driver 1) %>
-<%# Données du constat (adresse, heure, schéma => disabled pour le driver 2) %>
+<% # Données du driver 1 (disabled pour le driver 2) %>
+<% # Données du driver 2 (disabled pour le driver 1) %>
+<% # Données du constat (adresse, heure, schéma => disabled pour le driver 2) %>
 
-<%# boutton validé ou refusé %>
-<%# champ commentaire %>
+<% # boutton validé ou refusé %>
+<% # champ commentaire %>
 
 
-<%# <%= render 'form', report: @report %>
-<%= link_to 'Show', @report %> |
-<%= link_to 'Back', reports_path %>
+<% # <%= render 'form', report: @report %>
+
+
+<%# ajouter case sur le report status et combiner le resultat true false avec un and sur le disable driver deja defini %>
