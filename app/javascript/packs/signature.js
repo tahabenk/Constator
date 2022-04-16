@@ -18,7 +18,7 @@ $(document).on('turbolinks:load', function () {
     const signature_pad = new SignaturePad(canvas, { backgroundColor: '#F7F5F2' });
     console.log(signature_pad.toDataURL())
     $('.signature_pad_clear').click(function () { signature_pad.clear() });
-    $('.signature_pad_save').hover(function (event) {
+    $('.signature_pad_save').click(function (event) {
       if (signature_pad.isEmpty()) {
         alert('You must sign before to save');
         event.preventDefault();
