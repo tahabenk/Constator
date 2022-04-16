@@ -27,9 +27,15 @@
           <%= cl_image_tag @report.drawing.key, style: "width= 200px"%>
           <% else %>
           <p>Pas de dessin</p>
-        <% end %>
+        <% end %x>
 
         </div>
+        <% if @report.signature_driver_1.attached? %>
+          <%= image_tag @report.signature_driver_1 %>
+        <% end %>
+        <% if @report.signature_driver_2.attached? %>
+          <%= image_tag @report.signature_driver_2 %>
+        <% end %>
       </div>
     </div>
   </div>
