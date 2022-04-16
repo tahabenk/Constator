@@ -1,0 +1,40 @@
+<%= simple_form_for @report do |report| %>
+  <div class="d-flex">
+    <label for="driver" class="field">Conducteur :</label>
+    <input class="field-writer" type="search" id="driver" name="driver" placeholder="Cherchez le nom ici..." data-behavior="autocomplete">
+  </div>
+  <div class="d-flex">
+    <label for="vehicle_id" class="field">Véhicule :</label>
+    <select class="field-option" style="margin-left:45px" id="vehicle_id" name="vehicle_id">
+      <option selected>Choisissez votre véhicule</option>
+      <%= Vehicle.all.each do |vehicle| %>
+        <% if vehicle.user_id == current_user.id %>
+          <option value = "<%= vehicle.id %>"><%= vehicle.registration_number %> <%= vehicle.brand %> <%= vehicle.model %></option>
+        <% end %>
+      <% end %>
+    </select>
+  </div>
+  <div class="d-flex">
+    <label for="address" class="field">Addresse :</label>
+    <input class="field-option" style="margin-left:38px" type="input" id="address" name="report[address]" placeholder="Addresse">
+  </div>
+  <div class="d-flex field">
+    <%= report.input :accident_datetime, as: :string, type: :text, label: "Date :", input_html: { class: "field-date" } %>
+    <% # disabled: !@disabled %>
+  </div>
+
+  <%= report.input_field :drawing, as: :hidden, class: "signature_pad_input" %>
+  <div class="signature_pad text-center">
+    <div class="field" style="margin-bottom:10px">Dessin de l'accident</div>
+    <div class="signature_pad_body">
+      <canvas id="canv"></canvas>
+    </div>
+    <div class="d-flex">
+      <button type="button" class="btn btn-default signature_pad_clear">Supprimer le dessin</button>
+      <button type="button" class="btn btn-default signature_pad_save">Sauvegarder le dessin</button>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <%= report.button :submit, value:"Créer Constat" , class: "btn-save-report" %>
+  </div>
+<% end %>

@@ -7,8 +7,13 @@
 @import "bootstrap/scss/bootstrap";
 @import "font-awesome";
 @import "easy-autocomplete/dist/easy-autocomplete";
+@import "flatpickr/dist/flatpickr";
 
 
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+body{
+  background-color: #ecf4f3;
+}

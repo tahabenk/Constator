@@ -10,9 +10,9 @@
     <%= image_tag ("icons-nav.png"), width: 50 %>
   </div>
   <ul class="menu">
-    <li><%= link_to "Mes constats", "reports#index" %><span></span></li>
-    <li><%= link_to "Mes conducteurs", "drivers#index"%><span></span></li>
-    <li><%= link_to "Mes véhicules", "vehicles#index"%><span></span></li>
+    <li><%= link_to "Mes constats", reports_path%><span></span></li>
+    <li><%= link_to "Mes conducteurs", drivers_path%><span></span></li>
+    <li><%= link_to "Mes véhicules", vehicles_path%><span></span></li>
     <li><hr class="solid"></li>
     <li>
         <%= link_to destroy_user_session_path, :class => "nav-out", data: { turbo_method: :delete }, method: :delete do %>
