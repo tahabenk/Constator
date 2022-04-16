@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: [ :show, :edit, :update, :destroy ]
   before_action :action_params
+  before_action :set_variables, only: [ :edit, :update ]
 
   # GET /reports or /reports.json
   def index
@@ -24,6 +25,18 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    if @report.report_status_id == 4
+      @disable_driver_1 = true
+      @disable_driver_2 = true
+    else
+      if current_user.driver.id == @report.driver_1_id
+        @disable_driver_1 = false
+        @disable_driver_2 = true
+      else
+        @disable_driver_1 = true
+        @disable_driver_2 = false
+      end
+    end
   end
 
   # POST /reports or /reports.json
@@ -39,6 +52,8 @@ class ReportsController < ApplicationController
 
     vehicle_1 = Vehicle.find(vehicule_params)
     @report.vehicle_1_id = vehicle_1.id
+
+    # binding.pry
 
     data_uri = report_params[:drawing]
     # encoded_image = data_uri.split(",")[1]
@@ -64,19 +79,77 @@ class ReportsController < ApplicationController
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
     end
+
+
+    data_uri = report_params[:signature_driver_1]
+    encoded_image = data_uri.split(",")[1]
+    decoded_image = Base64.decode64(encoded_image)
+    File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+    @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
   end
 
   # PATCH/PUT /reports/1 or /reports/1.json
   def update
-    respond_to do |format|
-      if @report.update(report_params)
-        format.html { redirect_to report_url(@report), notice: "Report was successfully updated." }
-        format.json { render :show, status: :ok, location: @report }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+    if updating?
+      puts "******************* UPDATING *********************"
+      respond_to do |format|
+        if @report.update(observations: require_edit[:observations], address: require_edit[:address])
+          format.html { redirect_to report_url(@report), notice: "Report was successfully updated." }
+          format.json { render :show, status: :ok, location: @report }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @report.errors, status: :unprocessable_entity }
+        end
+
+        if current_user.driver.id == @report.driver_1_id
+          @driver_1.update(driver_licence_number: require_edit[:driver][:driver_licence_number])
+          data_uri = require_edit[:signature_driver_1]
+          encoded_image = data_uri.split(",")[1]
+          decoded_image = Base64.decode64(encoded_image)
+          File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+          @report.signature_driver_1.purge
+          @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
+          vehicle_1 = Vehicle.find(require_vehicle_1[:vehicle_1_id])
+          @report.vehicle_1_id = vehicle_1.id
+        else
+          @driver_2.update(driver_licence_number: require_edit[:driver][:driver_licence_number])
+          data_uri = require_edit[:signature_driver_2]
+          encoded_image = data_uri.split(",")[1]
+          decoded_image = Base64.decode64(encoded_image)
+          File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+          @report.signature_driver_2.purge
+          @report.signature_driver_2.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
+          vehicle_2 = Vehicle.find(require_vehicle_2[:vehicle_2_id])
+          @report.vehicle_2_id = vehicle_2.id
+        end
+
+
+
+
+        # mettre un bouton refus qui passe le statut à 3 (refusé driver 2, à revoir driver 1)
+        if current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && !@report.signature_driver_2.attached? && @report.report_status_id == 1
+          @report.report_status_id = 2
+        elsif current_user.driver.id == @report.driver_2_id && @report.signature_driver_1.attached? && @report.report_status_id == 2 && @report.signature_driver_2.attached?
+          @report.report_status_id = 4
+        elsif current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && @report.report_status_id == 3
+          @report.report_status_id = 2
+        else @report.report_status_id = 5
+        end
+
+        @report.save
+        # comment
+
+      end
+    else
+      @report.report_status_id = 3
+      @report.save
+      respond_to do |format|
+
+        format.html { redirect_to report_url(@report), notice: "Report was refused." }
       end
     end
+
+
   end
 
   # DELETE /reports/1 or /reports/1.json
@@ -111,9 +184,19 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
   end
 
+  def set_variables
+    @driver_1 = Driver.find(@report.driver_1_id)
+    @vehicle_1 = Vehicle.find(@report.vehicle_1_id)
+
+    @driver_2 = Driver.find(@report.driver_2_id)
+    if @report.report_status_id > 1 && !@report.vehicle_2_id.nil?
+      @vehicle_2 = Vehicle.find(@report.vehicle_2_id)
+    end
+  end
+
   # Only allow a list of trusted parameters through.
   def report_params
-    params.require(:report).permit(:accident_datetime, :signatures, :address, :observations, :drawing)
+    params.require(:report).permit(:accident_datetime, :signature_driver_1, :address, :observations, :drawing)
   end
 
   def vehicule_params
@@ -126,6 +209,22 @@ class ReportsController < ApplicationController
 
   def action_params
     params.permit(:action)
+  end
+
+  def require_edit
+    params.require(:report).permit(:observations, :address, :signature_driver_1, :signature_driver_2, driver: [:driver_licence_number], user: [:family_name])
+  end
+
+  def require_vehicle_1
+    params.require(:report).permit(:vehicle_1_id)
+  end
+
+  def require_vehicle_2
+    params.require(:report).permit(:vehicle_2_id)
+  end
+
+  def updating?
+    params[:commit] =="Update Report"
   end
 
 end

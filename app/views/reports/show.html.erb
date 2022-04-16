@@ -22,6 +22,12 @@
           </div>
         <label class="field">Observations:</label>
         <p class="field-data"><%= @report.observations %></p>
+        <% if @report.signature_driver_1.attached? %>
+          <%= image_tag @report.signature_driver_1 %>
+        <% end %>
+        <% if @report.signature_driver_2.attached? %>
+          <%= image_tag @report.signature_driver_2 %>
+        <% end %>
       </div>
     </div>
   </div>
