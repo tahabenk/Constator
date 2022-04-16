@@ -248,11 +248,11 @@ class ReportsController < ApplicationController
   end
 
   def updating?
-    params[:commit] =="Update Report"
+    params[:commit] =="Mettre à jour"
   end
 
   def validating?
-    params[:commit] =="Validate"
+    params[:commit] =="Valider"
   end
 
 end
