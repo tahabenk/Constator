@@ -14,7 +14,7 @@ class ReportsController < ApplicationController
       [{
         lat: @report.latitude,
         lng: @report.longitude,
-        image_url: helpers.asset_url("https://www.pngplay.com/wp-content/uploads/14/Flintstones-Car-Transparent-PNG.png")
+        image_url: helpers.asset_url("https://www.pngplay.com/wp-content/uploads/12/Car-Crash-Background-PNG.png")
       }]
   end
 
@@ -63,6 +63,7 @@ class ReportsController < ApplicationController
     new_file = File.new("accident-drawing.png", "wb")
     new_file.write(image_data)
     @report.drawing.attach(io: File.open("accident-drawing.png"), content_type: "image/png", filename: "accident-drawing.png")
+
     respond_to do |format|
       if @report.save
 
@@ -81,11 +82,11 @@ class ReportsController < ApplicationController
     end
 
 
-    data_uri = report_params[:signature_driver_1]
-    encoded_image = data_uri.split(",")[1]
-    decoded_image = Base64.decode64(encoded_image)
-    File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
-    @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
+    # data_uri = report_params[:signature_driver_1]
+    # encoded_image = data_uri.split(",")[1]
+    # decoded_image = Base64.decode64(encoded_image)
+    # File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+    # @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
   end
 
   # PATCH/PUT /reports/1 or /reports/1.json

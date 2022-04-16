@@ -2,11 +2,26 @@
   width: 350px;
   margin: 0 auto;
   canvas {
-    height: 500px !important;
+    height: 200px !important;
   }
 }
 
 .signature_pad_body canvas {
+  width: 100%;
+  height: 100%;
+  border: dotted #444;
+  color: black;
+}
+
+.drawing_pad {
+  width: 350px;
+  margin: 0 auto;
+  canvas {
+    height: 500px !important;
+  }
+}
+
+.drawing_pad_body canvas {
   width: 100%;
   height: 100%;
   border: dotted #444;
