@@ -56,17 +56,18 @@ class ReportsController < ApplicationController
     # binding.pry
 
     data_uri = report_params[:drawing]
+
+
     # encoded_image = data_uri.split(",")[1]
     # decoded_image = Base64.decode64(data_uri)
     # File.open("accident-drawing.png", "wb") { |f| f.write(decoded_image) }
     image_data = Base64.decode64(data_uri["data:image/png;base64,".length..-1])
-    new_file = File.new("accident-drawing.png", "wb")
+    new_file = File.new("accident-drawing-#{@report.id}.png", "wb")
     new_file.write(image_data)
-    @report.drawing.attach(io: File.open("accident-drawing.png"), content_type: "image/png", filename: "accident-drawing.png")
+    @report.drawing.attach(io: File.open(new_file), content_type: "image/png", filename: "accident-drawing-#{@report.id}.png")
 
     respond_to do |format|
       if @report.save
-
 
         # DriverReport.create(report: @report, driver_id: current_user.driver.id)
         # DriverReport.create(report: @report, driver_id: driver_id)
@@ -113,8 +114,6 @@ class ReportsController < ApplicationController
         end
 
         @report.report_status_id = 2
-
-
 
 
         # mettre un bouton refus qui passe le statut à 3 (refusé driver 2, à revoir driver 1)
@@ -248,11 +247,11 @@ class ReportsController < ApplicationController
   end
 
   def updating?
-    params[:commit] =="Mettre à jour"
+    params[:commit] == "Mettre à jour"
   end
 
   def validating?
-    params[:commit] =="Valider"
+    params[:commit] == "Valider"
   end
 
 end
