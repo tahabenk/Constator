@@ -42,28 +42,3 @@
   <%= render 'form', report: @report %>
 
   <%= link_to 'Back', reports_path %>
-
-<!--
-  comment
-  <form class="form-input">
-    <label for="driver-list">Driver:</label>
-    <select id="driver-list" name="driver" class="form-select" aria-label="Default select example">
-      <option selected>Chose your driver</option>
-      <%= Driver.all.each do |driver| %>
-        <option value = "<%= driver.id %>"><%= driver.user.name%> <%= driver.user.family_name%></option>>
-<%= render "shared/navbar" %>
-<div class="report-bg">
-  <div class="report-show-infos">
-    <div class="report-header">
-      <div>
-        <h1>Nouveau Constat</h1>
-      </div>
-    </div>
-      <% if params[:action] == "new" %>
-        <%# !@disabled faire un if au global pour fournir une vue différente entre le 1er driver le 2nd%>
-        <%= render "reports/form_create_report" %>
-      <% end %>
-  </div>
-  <div style="height:1vh;width:100%">
-  </div>
-</div>
