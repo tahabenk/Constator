@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
-    if @report.report_status_id == 4
+    if @report.report_status_id == 6
       @disable_driver_1 = true
       @disable_driver_2 = true
     else
@@ -81,11 +81,11 @@ class ReportsController < ApplicationController
     end
 
 
-    data_uri = report_params[:signature_driver_1]
-    encoded_image = data_uri.split(",")[1]
-    decoded_image = Base64.decode64(encoded_image)
-    File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
-    @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
+    # data_uri = report_params[:signature_driver_1]
+    # encoded_image = data_uri.split(",")[1]
+    # decoded_image = Base64.decode64(encoded_image)
+    # File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+    # @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
   end
 
   # PATCH/PUT /reports/1 or /reports/1.json
@@ -103,51 +103,74 @@ class ReportsController < ApplicationController
 
         if current_user.driver.id == @report.driver_1_id
           @driver_1.update(driver_licence_number: require_edit[:driver][:driver_licence_number])
-          data_uri = require_edit[:signature_driver_1]
-          encoded_image = data_uri.split(",")[1]
-          decoded_image = Base64.decode64(encoded_image)
-          File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
-          @report.signature_driver_1.purge
-          @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
           vehicle_1 = Vehicle.find(require_vehicle_1[:vehicle_1_id])
           @report.vehicle_1_id = vehicle_1.id
         else
           @driver_2.update(driver_licence_number: require_edit[:driver][:driver_licence_number])
-          data_uri = require_edit[:signature_driver_2]
-          encoded_image = data_uri.split(",")[1]
-          decoded_image = Base64.decode64(encoded_image)
-          File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
-          @report.signature_driver_2.purge
-          @report.signature_driver_2.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
           vehicle_2 = Vehicle.find(require_vehicle_2[:vehicle_2_id])
           @report.vehicle_2_id = vehicle_2.id
         end
+
+        @report.report_status_id = 2
 
 
 
 
         # mettre un bouton refus qui passe le statut à 3 (refusé driver 2, à revoir driver 1)
-        if current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && !@report.signature_driver_2.attached? && @report.report_status_id == 1
-          @report.report_status_id = 2
-        elsif current_user.driver.id == @report.driver_2_id && @report.signature_driver_1.attached? && @report.report_status_id == 2 && @report.signature_driver_2.attached?
+        # if current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && !@report.signature_driver_2.attached? && @report.report_status_id == 1
+        #   @report.report_status_id = 2
+        # elsif current_user.driver.id == @report.driver_2_id && @report.signature_driver_1.attached? && @report.report_status_id == 2 && @report.signature_driver_2.attached?
+        #   @report.report_status_id = 4
+        # elsif current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && @report.report_status_id == 3
+        #   @report.report_status_id = 2
+        # else @report.report_status_id = 5
+        # end
+
+        # @report.save
+
+      end
+    elsif validating?
+      if current_user.driver.id == @report.driver_1_id
+        data_uri = require_edit[:signature_driver_1]
+        encoded_image = data_uri.split(",")[1]
+        decoded_image = Base64.decode64(encoded_image)
+        File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+        @report.signature_driver_1.purge
+        @report.signature_driver_1.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
+
+        if @report.report_status_id == 3 || @report.report_status_id == 4
+          @report.report_status_id = 6
+        else
           @report.report_status_id = 4
-        elsif current_user.driver.id == @report.driver_1_id && @report.signature_driver_1.attached? && @report.report_status_id == 3
-          @report.report_status_id = 2
-        else @report.report_status_id = 5
         end
+      else
+        data_uri = require_edit[:signature_driver_2]
+        encoded_image = data_uri.split(",")[1]
+        decoded_image = Base64.decode64(encoded_image)
+        File.open("signature_#{@report.id}_#{current_user.id}.png", "wb") { |f| f.write(decoded_image) }
+        @report.signature_driver_2.purge
+        @report.signature_driver_2.attach(io: File.open("signature_#{@report.id}_#{current_user.id}.png"), filename: "signature_#{@report.id}_#{current_user.id}.png")
 
-        @report.save
-        # comment
-
+        if @report.report_status_id == 3 || @report.report_status_id == 4
+          @report.report_status_id = 6
+        else
+          @report.report_status_id = 3
+        end
+      end
+      respond_to do |format|
+        format.html { redirect_to report_url(@report), notice: "Constat mis à jour." }
       end
     else
-      @report.report_status_id = 3
-      @report.save
-      respond_to do |format|
+      @report.signature_driver_1.purge
+      @report.signature_driver_2.purge
+      @report.report_status_id = 2
 
-        format.html { redirect_to report_url(@report), notice: "Report was refused." }
+      respond_to do |format|
+        format.html { redirect_to report_url(@report), notice: "Constat refusé" }
       end
     end
+
+    @report.save
 
 
   end
@@ -225,6 +248,10 @@ class ReportsController < ApplicationController
 
   def updating?
     params[:commit] =="Update Report"
+  end
+
+  def validating?
+    params[:commit] =="Validate"
   end
 
 end
