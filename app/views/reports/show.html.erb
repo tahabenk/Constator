@@ -22,6 +22,14 @@
           </div>
         <label class="field">Observations:</label>
         <p class="field-data"><%= @report.observations %></p>
+        <div class="map-report">
+        <% if @report.drawing.attached? %>
+          <%= cl_image_tag @report.drawing.key, style: "width= 200px"%>
+          <% else %>
+          <p>Pas de dessin</p>
+        <% end %>
+
+        </div>
       </div>
     </div>
   </div>
