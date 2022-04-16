@@ -35,12 +35,16 @@
         <% end %>
 
         </div>
+        <div class="map-report">
          <% if @report.signature_driver_1.attached? %>
-          <%= image_tag @report.signature_driver_1 %>
+          <%= image_tag @report.signature_driver_1, style: "width= 200px" %>
         <% end %>
+        </div>
+        <div class="map-report">
         <% if @report.signature_driver_2.attached? %>
           <%= image_tag @report.signature_driver_2 %>
         <% end %>
+        </div>
         <div style="height:2vh;width:100%">
         </div>
       </div>
