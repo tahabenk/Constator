@@ -138,10 +138,12 @@
             </div>
           </div>
       <% end %>
+      <div class="parent_button">
+      <div class="div1"><%= f.button :submit,class: 'btn-update-report' %></div>
+      <div class="div2"><%= f.button :submit, "Refuser le constat", class: "btn-refuse-report" %></div>
+      <div class="div3"><%= f.button :submit, "Valider le constat", class: "btn-accept-report" %></div>
 
-      <%= f.button :submit,class: 'btn-success' %>
-      <%= f.button :submit, "Valider le constat", class: 'btn-accept-report' %>
-      <%= f.button :submit, "Refuser le constat", class: 'btn-refuse-report' %>
+      </div>
     <% end %>
 
   <% # comment %>
