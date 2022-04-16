@@ -8,12 +8,12 @@
 
 require 'faker'
 
-ReportStatus.create(status_description:'created')
-ReportStatus.create(status_description:'sent for validation')
-ReportStatus.create(status_description:'sent back for amendment')
-ReportStatus.create(status_description:'refused')
-ReportStatus.create(status_description:'sent for final validation')
-ReportStatus.create(status_description:'sent back for final validation')
+ReportStatus.create(status_description:'créé')
+ReportStatus.create(status_description:'à valider driver 1 et driver 2')
+ReportStatus.create(status_description:'à valider driver 1')
+ReportStatus.create(status_description:'à valider driver 2')
+ReportStatus.create(status_description:'refusé')
+ReportStatus.create(status_description:'validé driver 1 et driver 2')
 
 User.create!(
   name: 'constator',

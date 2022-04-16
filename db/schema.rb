@@ -172,8 +172,6 @@ ActiveRecord::Schema.define(version: 2022_04_07_010356) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  # comment
-
   create_table "vehicle_associations", force: :cascade do |t|
     t.bigint "vehicle_id", null: false
     t.bigint "report_id", null: false
