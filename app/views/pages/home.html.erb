@@ -3,16 +3,16 @@
     <div class="col-12" style="margin-top:230px">
       <%= image_tag ("Constator-logo.png"), alt: "Constator", width: 400, class: "logo-center" %>
     </div>
-    <div class="col-12">
+    <div class="col-12" style="margin-bottom:50px">
       <h2 class="home-text">Faster, Better, Stronger</h2>
     </div>
-    <div class="col-12" style="margin-top:-20px">
-      <p><q>Wise men are never in a hurry</q></p>
-    </div>
     <div class="col-12">
-      <%= link_to "Join the community", new_user_registration_path, class: "register-btn-home" %>
+      <%= link_to "Rejoindre la communauté", new_user_registration_path, class: "register-btn-home" %>
     </div>
-    <div class="col-12">
-      <%= link_to "Already having an account, sign-in !", user_session_path, :style=>'color: white' %>
+    <div class="row">
+      <div class="col-4 home-end" style="margin-top:70px"></div>
+      <div class="col-8 home-end" style="margin-top:70px">
+        <%= link_to "Vous avez déjà un compte ? Connectez-vous", user_session_path, class:"connect-btn-home" %>
+      </div>
     </div>
   </div>
