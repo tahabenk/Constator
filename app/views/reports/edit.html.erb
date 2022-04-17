@@ -49,7 +49,7 @@
       <% if @disable_driver_1 && @report.signature_driver_1.attached? %>
         <%= image_tag @report.signature_driver_1 %>
       <% else %>
-        <%= f.input_field :signature_driver_1, as: :hidden, class: "signature_pad_input", disabled: @disable_driver_1 %>
+        <%= f.input_field :signature_driver_1, as: :hidden, class: "signature_pad_input" %>
           <div class="signature_pad text-center">
             <div class="text-muted">Signer ici</div>
             <div class="signature_pad_body">
@@ -125,7 +125,7 @@
       <% if @disable_driver_2 && @report.signature_driver_2.attached? %>
         <%= image_tag @report.signature_driver_2 %>
       <% else %>
-        <%= f.input_field :signature_driver_2, as: :hidden, class: "signature_pad_input", disabled: @disable_driver_2 %>
+        <%= f.input_field :signature_driver_2, as: :hidden, class: "signature_pad_input" %>
           <div class="signature_pad text-center">
             <div class="text-muted">Signer ici</div>
             <div class="signature_pad_body">

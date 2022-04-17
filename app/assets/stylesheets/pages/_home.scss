@@ -59,12 +59,24 @@ text-align: center;
 
 .register-btn-home {
   background: #FF7E67;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
-  padding: 8px 24px;
+  padding: 8px 20px;
   font-family: Quicksand;
   font-weight: bold;
   height: 100px;
-  width: 300px;
-  margin-left: 80px;
+  width: 340px;
+  margin-left: 50px;
+  text-decoration: none;
+  margin-top: 30px;
+}
+
+.connect-btn-home {
+  font-size: small;
+  color: white;
+  text-decoration: none;
+}
+
+.home-end {
+
 }
